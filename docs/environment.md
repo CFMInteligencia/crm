@@ -4,6 +4,8 @@ Setup, DB commands, Google Cloud and the `vercel env pull` hazard: `docs/setup.m
 
 ## One `.env`, at the repo root
 
+The Render scripts use `CRM_SERVICE=app` or `CRM_SERVICE=api` for separate services. The default `all` runs both locally. See `deployment/README.md`.
+
 `.env.example` **is the documentation** — every variable the repo reads, with a note,
 and nothing that is not read. `packages/env` walks up to the workspace root and reads
 `.env`, then `.env.local` on top.

@@ -1,25 +1,30 @@
 # Render Free
 
-The web interface and API run in one Free web service. The Next.js server owns the public port.
-Its existing `/api` proxy forwards requests to the API on port 3001. Google redirects to the public origin.
-The supervisor stops both processes when either fails and runs mailbox synchronization every five minutes while awake.
-Render can suspend the service when inactive; synchronization resumes after it wakes. This is not an always-on background service.
+Use two Free web services: `CRM_SERVICE=app` for the interface and `CRM_SERVICE=api` for the API.
+The combined `all` profile is for local verification; memory measurements favor separate instances on Render.
 
-Use the Node runtime, Bun 1.3.12, Node 22, repository root, and the deployment branch.
+- Runtime: Node, with `NODE_VERSION=22` and `BUN_VERSION=1.3.12`.
+- Build: `bun install --frozen-lockfile && bun deployment/build.mjs`.
+- Start: `node deployment/start.mjs`.
+- Set compute explicitly to **Free** on both services.
+- Set `APP_URL` to the interface HTTPS origin on both services.
+- On the interface, set `API_URL` to the API HTTPS origin before building.
+- Set `REQUIRE_RESEARCH_KEY=false`, `CRM_TELEMETRY_DISABLED=1`, and `NEXT_TELEMETRY_DISABLED=1`.
+- Secrets: `DATABASE_URL`, `BETTER_AUTH_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`.
+- API synchronization also requires `CRON_SECRET`; the interface does not need it.
+- `ALLOWED_SIGN_IN` contains only the authorized email address.
 
-- Build command: `bun install --frozen-lockfile && bun deployment/build.mjs`
-- Start command: `bun deployment/start.mjs`
-- Compute: **Free**, explicitly selected.
-- Variables: `BUN_VERSION=1.3.12`, `NODE_VERSION=22`, `REQUIRE_RESEARCH_KEY=false`, `CRM_TELEMETRY_DISABLED=1`, `NEXT_TELEMETRY_DISABLED=1`.
-- Secrets: `DATABASE_URL`, `BETTER_AUTH_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `CRON_SECRET`.
-- Access: `ALLOWED_SIGN_IN` contains only the authorized user's email address.
+The interface's existing `/api` proxy forwards to the API. Its browser client uses the interface origin.
+The API builds OAuth callback URLs from APP_URL. Leave AUTH_COOKIE_DOMAIN unset.
+The scripts resolve the Supabase certificate path for the host and retain certificate validation.
+Apply database migrations and table access restrictions separately before publishing schema changes.
 
-Render supplies the public hostname; the scripts derive APP_URL and configure the separate internal and OAuth API origins.
-The scripts set the Supabase CA path for the current host without disabling certificate validation.
-Run database migrations separately against the dedicated database and apply the table restrictions before release.
-Never include `.env`, `.scratch`, or the deployment notes with account details in uploaded source changes.
+The API runs mailbox synchronization every five minutes while awake. Free services can sleep when inactive.
+The two services share the workspace's free monthly hours. This is not an always-on background service.
+The supervisor stops the child process on shutdown, and exits if a child fails.
 
-The AI agent is not started by this profile. Before enabling it, configure model access, durable Workflow storage and a sandbox.
-Core contacts, companies, deals and mailbox integrations do not require an AI model key.
+The AI agent is not started by this profile. It requires model access, durable Workflow storage and a sandbox before activation.
+Core contacts, companies, deals and mailbox integrations do not require an AI key.
+Never upload `.env`, `.scratch`, or the local infrastructure notes to GitHub.
 
 References: https://render.com/docs/free and https://render.com/docs/bun-version

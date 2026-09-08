@@ -13,7 +13,7 @@ export const internalApiUrl = `http://127.0.0.1:${deployment.apiPort}`;
 
 export function environment() {
 	const env = { ...process.env };
-	if (env.RENDER_EXTERNAL_HOSTNAME) {
+	if (!env.APP_URL && env.RENDER_EXTERNAL_HOSTNAME) {
 		env.APP_URL = `https://${env.RENDER_EXTERNAL_HOSTNAME}`;
 	}
 	if (!env.APP_URL) throw new Error("APP_URL is required");
