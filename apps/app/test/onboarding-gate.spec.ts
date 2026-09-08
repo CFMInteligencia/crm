@@ -11,10 +11,14 @@ const SLUG = "comp-ai";
 const realFetch = globalThis.fetch;
 
 const realMarketing = process.env.IS_MARKETING;
+const realResearchRequirement = process.env.REQUIRE_RESEARCH_KEY;
 
 afterEach(() => {
 	globalThis.fetch = realFetch;
 	marketing(realMarketing);
+	if (realResearchRequirement === undefined)
+		delete process.env.REQUIRE_RESEARCH_KEY;
+	else process.env.REQUIRE_RESEARCH_KEY = realResearchRequirement;
 });
 
 function marketing(value: string | undefined) {
@@ -156,6 +160,21 @@ describe("readResearchGate", () => {
 });
 
 describe("proxy", () => {
+	it("allows keyless setup without bypassing sign-in or workspace setup", async () => {
+		process.env.REQUIRE_RESEARCH_KEY = "false";
+		setup({ configured: false });
+		expect(redirectedTo(await proxy(request(`/${SLUG}/contacts`)))).toBe(
+			"/sign-in",
+		);
+		expect(redirectedTo(await proxy(request("/", [SESSION_COOKIE])))).toBe(
+			`/${SLUG}`,
+		);
+		setup({ configured: false, onboarded: false });
+		expect(redirectedTo(await proxy(request("/", [SESSION_COOKIE])))).toBe(
+			"/onboarding",
+		);
+	});
+
 	it("shows a stranger the landing page and nothing behind it", async () => {
 		marketing("true");
 

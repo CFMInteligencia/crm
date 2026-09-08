@@ -69,6 +69,8 @@ export async function readWorkspaceGate(
 }
 
 export async function readResearchGate(request: NextRequest): Promise<Gate> {
+	if (process.env.REQUIRE_RESEARCH_KEY === "false") return "settled";
+
 	const { configured } = researchKeyAnswer.parse(
 		await read(request, "settings.researchKey"),
 	);

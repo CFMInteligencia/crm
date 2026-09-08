@@ -123,6 +123,10 @@ excluded — recognising our URL for the image optimizer needs no token.
 
 ### The Context key is asked for, not configured
 
+Self-hosters can set `REQUIRE_RESEARCH_KEY=false` to use the CRM without a Context key.
+This skips research onboarding only. Authentication, mailbox grants and workspace setup remain required.
+Only the literal `false` skips the gate; research can be configured later in Settings.
+
 **`CONTEXT_DEV_API_KEY` is not a variable here and must not become one.** The key lives
 in `AppSetting`, is asked for at `/onboarding/research`, and changes on Settings →
 General — an admin who cannot redeploy cannot set a variable.
@@ -131,7 +135,7 @@ General — an admin who cannot redeploy cannot set a variable.
   read back from a LinkedIn URL already on their record. Both capabilities in
   `agent/lib/capabilities.ts` turn on and off with this one key.
 - **An install that had the variable is asked again**: no migration, no fallback, and
-  **the gate cannot be dismissed**.
+  **the gate is required unless the operator sets `REQUIRE_RESEARCH_KEY=false`**.
 - **Nothing is lost while waiting.** A keyless `brand` task settles `SKIPPED` *before*
   anything marks the row `RUNNING`, and `settle` only overwrites `RUNNING` — so the
   company stays `PENDING`, which the sweep re-queues
