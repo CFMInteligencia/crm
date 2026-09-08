@@ -31,7 +31,9 @@ export async function requireOwner(
 	});
 
 	if (!owner) {
-		throw new BadRequestException("That owner does not work here any more.");
+		throw new BadRequestException(
+			"Este responsável não participa mais da equipe.",
+		);
 	}
 }
 

@@ -13,12 +13,14 @@ import {
 	createOpenApiExpressMiddleware,
 	generateOpenApiDocument,
 } from "trpc-to-openapi";
+import { z } from "zod";
 import { AppModule } from "./app.module";
 import { ContextLogger } from "./logging/context-logger";
 import { REST_BRIDGE_PATH } from "./trpc/openapi";
 import { createBaseTrpcContext } from "./trpc/trpc.context";
 
 export async function createApp(): Promise<NestExpressApplication> {
+	z.config(z.locales.pt());
 	const app = await NestFactory.create<NestExpressApplication>(
 		AppModule,
 		new ExpressAdapter(),

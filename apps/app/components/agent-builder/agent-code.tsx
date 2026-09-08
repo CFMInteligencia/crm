@@ -95,7 +95,7 @@ export function AgentCode({
 		if (failed || remaining.length > 0) return;
 
 		setEditing(false);
-		toast.success("Saved.");
+		toast.success("Salvo.");
 	}, [agentId, queryClient, save, trpc]);
 
 	const editorOptions = useMemo<EditorOptions<undefined>>(

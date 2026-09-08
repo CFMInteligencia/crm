@@ -175,7 +175,9 @@ export class ActivitiesService {
 		}
 
 		if (activity.type !== ActivityType.TASK) {
-			throw new BadRequestException("Only tasks can be completed.");
+			throw new BadRequestException(
+				"Apenas tarefas podem ser marcadas como concluídas.",
+			);
 		}
 
 		const updated = await this.db.activity.update({
@@ -221,7 +223,7 @@ export class ActivitiesService {
 		if (input.contactId) return { contactId: input.contactId };
 		if (input.companyId) return { companyId: input.companyId };
 		throw new BadRequestException(
-			"A timeline needs a company, a contact or a deal.",
+			"Selecione uma empresa, contato ou negócio para a linha do tempo.",
 		);
 	}
 

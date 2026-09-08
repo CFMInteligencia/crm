@@ -253,7 +253,9 @@ export class AgentDefinitionsService {
 			if (replay) return { saved: false, versionId: replay.versionId };
 
 			if (!agent.currentVersionId) {
-				throw new BadRequestException("This agent has no deployed version.");
+				throw new BadRequestException(
+					"Este agente não tem uma versão publicada.",
+				);
 			}
 
 			const current = await tx.agentVersion.findFirstOrThrow({
@@ -359,7 +361,9 @@ export class AgentDefinitionsService {
 			if (replay) return replay.versionId;
 
 			if (!agent.currentVersionId) {
-				throw new BadRequestException("This agent has no deployed version.");
+				throw new BadRequestException(
+					"Este agente não tem uma versão publicada.",
+				);
 			}
 
 			const current = await tx.agentVersion.findFirstOrThrow({
@@ -381,7 +385,7 @@ export class AgentDefinitionsService {
 			const parsed = agentManifest.safeParse(current.manifest);
 			if (!parsed.success) {
 				throw new BadRequestException(
-					"This version's manifest cannot be read, so it cannot be changed.",
+					"Não foi possível ler o manifesto desta versão. A alteração está bloqueada.",
 				);
 			}
 
@@ -396,7 +400,9 @@ export class AgentDefinitionsService {
 				const keep = new Set(input.actions);
 				actions = actions.filter((action) => keep.has(action.type));
 				if (actions.length === 0) {
-					throw new BadRequestException("An agent needs at least one action.");
+					throw new BadRequestException(
+						"O agente precisa de pelo menos uma ação.",
+					);
 				}
 			}
 
@@ -405,7 +411,7 @@ export class AgentDefinitionsService {
 			if (channel) {
 				if (!actions.some((action) => action.destination !== undefined)) {
 					throw new BadRequestException(
-						"None of this agent's actions post to a channel, so its channel cannot be changed.",
+						"Este agente não publica em canais. Não existe um canal para alterar.",
 					);
 				}
 
@@ -520,7 +526,7 @@ export class AgentDefinitionsService {
 			if (existing) {
 				if (existing.versionId !== input.versionId) {
 					throw new BadRequestException(
-						"That deployment request has already been used.",
+						"Esta solicitação de publicação já foi processada.",
 					);
 				}
 
@@ -538,7 +544,7 @@ export class AgentDefinitionsService {
 
 			if (version.status !== "READY" && version.status !== "DEPLOYED") {
 				throw new BadRequestException(
-					"Only a validated agent version can be deployed.",
+					"Apenas versões validadas podem ser publicadas.",
 				);
 			}
 			const metadata = versionMetadata(version.manifest);

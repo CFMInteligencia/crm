@@ -194,7 +194,7 @@ export function AttachDealContact({
 	const nobody = !options.isPending && candidates.length === 0;
 
 	const placeholder = options.isPending
-		? "Loading…"
+		? "Carregando…"
 		: nobody
 			? `Todos os contatos de ${companyName} já participam`
 			: "Selecionar pessoa";

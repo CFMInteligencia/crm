@@ -496,9 +496,7 @@ export class DealsService {
 				};
 			}
 			if (LOSING.has(input.stage) && !closedReason) {
-				throw new BadRequestException(
-					"Say why it was lost — a closed-lost deal with no reason teaches nobody anything.",
-				);
+				throw new BadRequestException("Informe o motivo da perda do negócio.");
 			}
 
 			const now = new Date();
@@ -642,7 +640,7 @@ export class DealsService {
 		});
 
 		if (count === 0) {
-			throw new NotFoundException("That contact is not on this deal.");
+			throw new NotFoundException("Este contato não participa do negócio.");
 		}
 
 		this.logger.log({
@@ -663,7 +661,7 @@ export class DealsService {
 		});
 
 		if (count === 0) {
-			throw new NotFoundException("That contact is not on this deal.");
+			throw new NotFoundException("Este contato não participa do negócio.");
 		}
 
 		return { dealId: input.dealId, contactId: input.contactId, role };
@@ -700,9 +698,7 @@ export class DealsService {
 		const closedReason = input.closedReason?.trim();
 
 		if (LOSING.has(input.stage) && !closedReason) {
-			throw new BadRequestException(
-				"Say why they were lost — a closed-lost deal with no reason teaches nobody anything.",
-			);
+			throw new BadRequestException("Informe o motivo da perda dos negócios.");
 		}
 
 		return runBulk(input.ids, (id) =>
@@ -843,7 +839,7 @@ export class DealsService {
 			(cause.code === "P2003" || cause.code === "P2025")
 		) {
 			throw new BadRequestException(
-				"That company or owner does not exist any more.",
+				"A empresa ou o responsável não existe mais.",
 			);
 		}
 		throw cause;

@@ -174,7 +174,7 @@ export class ApiKeysService {
 			);
 
 			throw new InternalServerErrorException(
-				"Could not reach the auth service.",
+				"O serviço de autenticação está indisponível.",
 			);
 		}
 	}

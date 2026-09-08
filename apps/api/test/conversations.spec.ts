@@ -781,9 +781,7 @@ describe("ConversationsService", () => {
 		} catch (caught) {
 			error = caught as Error;
 		}
-		expect(error?.message).toBe(
-			"The agent is no longer waiting for that answer.",
-		);
+		expect(error?.message).toBe("O agente não aguarda mais esta resposta.");
 	});
 
 	it("accepts only one concurrent answer to a follow-up request", async () => {

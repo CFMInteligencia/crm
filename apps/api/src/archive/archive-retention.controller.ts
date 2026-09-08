@@ -73,7 +73,9 @@ export class ArchiveRetentionController {
 			this.logger.error({
 				message: "CRON_SECRET is not set — refusing to run archive pruning.",
 			});
-			throw new ServiceUnavailableException("Pruning is not configured.");
+			throw new ServiceUnavailableException(
+				"A limpeza de registros não está configurada.",
+			);
 		}
 
 		if (!timingSafeEquals(authorization ?? "", `Bearer ${this.secret}`)) {

@@ -719,7 +719,7 @@ export class ContactsService {
 		}
 
 		if (fact.status !== FactStatus.PROPOSED) {
-			throw new ConflictException("That suggestion has already been settled.");
+			throw new ConflictException("Esta sugestão já foi resolvida.");
 		}
 
 		const accepted = input.decision === "accept";
@@ -912,9 +912,7 @@ export class ContactsService {
 				throw new NotFoundException(`No contact with id ${id}.`);
 			}
 			if (cause.code === "P2002") {
-				throw new ConflictException(
-					"Another contact already uses that email address.",
-				);
+				throw new ConflictException("Outro contato já usa este e-mail.");
 			}
 		}
 		throw cause;

@@ -176,7 +176,7 @@ export class TrackingRetentionController {
 			this.logger.error({
 				message: "CRON_SECRET is not set — refusing to run tracking retention.",
 			});
-			throw new ServiceUnavailableException("Retention is not configured.");
+			throw new ServiceUnavailableException("A retenção não está configurada.");
 		}
 
 		if (!timingSafeEquals(authorization ?? "", `Bearer ${this.secret}`)) {

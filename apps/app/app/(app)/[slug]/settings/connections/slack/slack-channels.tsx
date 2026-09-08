@@ -86,7 +86,7 @@ export function SlackChannels() {
 					size="sm"
 					variant="outline"
 				>
-					{refreshing ? "Refreshing…" : "Atualizar"}
+					{refreshing ? "Atualizando…" : "Atualizar"}
 				</Button>
 			</div>
 
@@ -133,7 +133,7 @@ export function SlackChannels() {
 					size="sm"
 					variant="outline"
 				>
-					{channels.fetchingMore ? "Loading…" : "Carregar mais"}
+					{channels.fetchingMore ? "Carregando…" : "Carregar mais"}
 				</Button>
 			) : null}
 
@@ -205,7 +205,7 @@ function AskDialog({
 						disabled={status === "pending"}
 						onClick={canInviteItself ? onConfirm : () => void copyThenConfirm()}
 					>
-						<AsyncButtonContent pendingLabel="Adding…" status={status}>
+						<AsyncButtonContent pendingLabel="Adicionando…" status={status}>
 							{canInviteItself
 								? "Adicionar Comp AI"
 								: "Copiar e marcar como solicitado"}

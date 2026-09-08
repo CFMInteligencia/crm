@@ -588,7 +588,7 @@ export class CompaniesService {
 
 		if (!company.domain) {
 			throw new BadRequestException(
-				"There is nothing to read without a domain — add one first.",
+				"Adicione um domínio para iniciar a pesquisa.",
 			);
 		}
 
@@ -610,9 +610,7 @@ export class CompaniesService {
 				throw new NotFoundException(`No contact with id ${contactId}.`);
 			}
 			if (contact.companyId !== companyId) {
-				throw new BadRequestException(
-					"That contact does not work at this company.",
-				);
+				throw new BadRequestException("Este contato não pertence à empresa.");
 			}
 		}
 
@@ -726,9 +724,7 @@ export class CompaniesService {
 				throw new NotFoundException(`No company with id ${id}.`);
 			}
 			if (cause.code === "P2002") {
-				throw new ConflictException(
-					"Another company already uses that domain.",
-				);
+				throw new ConflictException("Outra empresa já usa este domínio.");
 			}
 		}
 		throw cause;

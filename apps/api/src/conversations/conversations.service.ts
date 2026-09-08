@@ -529,20 +529,16 @@ export class ConversationsService {
 		}
 
 		if (!conversation.sessionId || !conversation.continuationToken) {
-			throw new BadRequestException(
-				"The agent is no longer waiting for that answer.",
-			);
+			throw new BadRequestException("O agente não aguarda mais esta resposta.");
 		}
 
 		const question = pendingBuilderQuestionOf(conversation.pendingInputRequest);
 		if (!question) {
-			throw new BadRequestException(
-				"The agent is no longer waiting for that answer.",
-			);
+			throw new BadRequestException("O agente não aguarda mais esta resposta.");
 		}
 		if (question.requestId !== input.requestId) {
 			throw new BadRequestException(
-				"That follow-up question is no longer active.",
+				"Esta pergunta de acompanhamento não está mais ativa.",
 			);
 		}
 
@@ -553,20 +549,18 @@ export class ConversationsService {
 
 		if (input.optionId && !selected) {
 			throw new BadRequestException(
-				"That answer is not available for this question.",
+				"Esta resposta não está disponível para a pergunta.",
 			);
 		}
 
 		const acceptsText = question.allowFreeform || question.display === "text";
 		if (input.text && !acceptsText) {
-			throw new BadRequestException(
-				"Choose one of the available answers for this question.",
-			);
+			throw new BadRequestException("Selecione uma das respostas disponíveis.");
 		}
 
 		const answer = input.optionId ?? input.text;
 		if (!answer) {
-			throw new BadRequestException("Choose an answer before submitting.");
+			throw new BadRequestException("Selecione uma resposta antes de enviar.");
 		}
 
 		const displayText = selected?.label ?? answer;
@@ -619,7 +613,7 @@ export class ConversationsService {
 			});
 			if (answered) {
 				throw new BadRequestException(
-					"That follow-up question has already been answered.",
+					"Esta pergunta de acompanhamento já foi respondida.",
 				);
 			}
 
@@ -685,7 +679,7 @@ export class ConversationsService {
 		});
 
 		if (!row) {
-			throw new NotFoundException("That attachment is unavailable.");
+			throw new NotFoundException("Este anexo está indisponível.");
 		}
 
 		return {
@@ -762,7 +756,7 @@ export class ConversationsService {
 				existing.contactId ?? existing.companyId ?? existing.dealId;
 			if (existingRecordId !== recordId) {
 				throw new BadRequestException(
-					"A conversation cannot be moved to another CRM record.",
+					"Uma conversa não pode ser movida para outro registro.",
 				);
 			}
 
@@ -938,7 +932,7 @@ export class ConversationsService {
 
 		if (!recordId || recordIds.length !== 1) {
 			throw new BadRequestException(
-				"Choose exactly one contact, company or deal.",
+				"Selecione apenas um contato, empresa ou negócio.",
 			);
 		}
 
@@ -1003,9 +997,7 @@ export class ConversationsService {
 		const referencedById = new Map(referenced.map((row) => [row.id, row]));
 
 		if (referencedIds.some((id) => !referencedById.has(id))) {
-			throw new BadRequestException(
-				"One or more attachments are no longer available.",
-			);
+			throw new BadRequestException("Um ou mais anexos não estão disponíveis.");
 		}
 
 		return input.attachments.map((attachment, position) => {
@@ -1022,7 +1014,7 @@ export class ConversationsService {
 			const stored = referencedById.get(attachment.id);
 			if (!stored) {
 				throw new BadRequestException(
-					"One or more attachments are no longer available.",
+					"Um ou mais anexos não estão disponíveis.",
 				);
 			}
 			return {
@@ -1044,7 +1036,9 @@ export class ConversationsService {
 		});
 
 		if (!member) {
-			throw new NotFoundException("No workspace membership was found.");
+			throw new NotFoundException(
+				"Nenhum vínculo com a equipe foi encontrado.",
+			);
 		}
 	}
 
@@ -1070,7 +1064,7 @@ export class ConversationsService {
 			existing.conversation.userId !== userId ||
 			existing.conversation.kind !== "BUILDER"
 		) {
-			throw new BadRequestException("That request has already been used.");
+			throw new BadRequestException("Esta solicitação já foi processada.");
 		}
 
 		return { id: existing.conversation.id };
@@ -1085,7 +1079,7 @@ export class ConversationsService {
 			existing.conversationId !== conversationId ||
 			existing.submittedById !== userId
 		) {
-			throw new BadRequestException("That request has already been used.");
+			throw new BadRequestException("Esta solicitação já foi processada.");
 		}
 
 		return { id: existing.id };

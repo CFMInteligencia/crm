@@ -212,9 +212,7 @@ export function ContactsTable() {
 			search: companyText,
 			onSearchChange: setCompanyText,
 			stale: companies.isFetching || companyText.trim() !== companyQuery.trim(),
-			empty: companies.isFetching
-				? "Searching…"
-				: "Nenhuma empresa encontrada.",
+			empty: companies.isFetching ? "Buscando…" : "Nenhuma empresa encontrada.",
 			options: [
 				...(companyQuery.trim()
 					? []

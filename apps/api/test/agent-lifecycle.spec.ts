@@ -668,7 +668,7 @@ describe("agent lifecycle", () => {
 		}
 
 		expect((refusal as Error).message).toBe(
-			"None of this agent's actions post to a channel, so its channel cannot be changed.",
+			"Este agente não publica em canais. Não existe um canal para alterar.",
 		);
 		expect(await db.agentVersion.count({ where: { agentId } })).toBe(1);
 	});

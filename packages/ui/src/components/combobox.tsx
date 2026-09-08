@@ -33,7 +33,7 @@ function Combobox({
 	value,
 	onValueChange,
 	placeholder = "Selecionar opção",
-	searchPlaceholder = "Search…",
+	searchPlaceholder = "Buscar…",
 	empty = "Nenhum resultado.",
 	search,
 	onSearchChange,

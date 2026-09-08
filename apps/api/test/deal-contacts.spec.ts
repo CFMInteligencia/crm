@@ -152,7 +152,7 @@ describe("bringing a contact onto a deal", () => {
 				contactId: colleagueId,
 				role: "Blocker",
 			}),
-		).rejects.toThrow("That contact is not on this deal.");
+		).rejects.toThrow("Este contato não participa do negócio.");
 	});
 
 	it("takes them off again, leaving the contact in the CRM", async () => {
@@ -167,6 +167,6 @@ describe("bringing a contact onto a deal", () => {
 	it("says so when they were never on it", async () => {
 		await expect(
 			deals.detachContact({ dealId, contactId: championId }),
-		).rejects.toThrow("That contact is not on this deal.");
+		).rejects.toThrow("Este contato não participa do negócio.");
 	});
 });

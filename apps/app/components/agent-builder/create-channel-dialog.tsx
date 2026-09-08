@@ -102,7 +102,7 @@ export function CreateChannelDialog({
 						disabled={!valid || create.isPending}
 						onClick={() => create.mutate({ name: slug, isPrivate })}
 					>
-						{create.isPending ? "Creating…" : "Criar canal"}
+						{create.isPending ? "Criando…" : "Criar canal"}
 					</Button>
 				</DialogFooter>
 			</DialogContent>

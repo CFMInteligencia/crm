@@ -169,7 +169,7 @@ export class SsoService {
 
 		if (domains.length === 0) {
 			throw new BadRequestException(
-				"Give the email domain your people sign in with, for example acme.com.",
+				"Informe o domínio de e-mail da equipe, como empresa.com.br.",
 			);
 		}
 
@@ -265,7 +265,7 @@ export class SsoService {
 			);
 
 			throw new InternalServerErrorException(
-				"Could not reach the identity provider.",
+				"O provedor de identidade está indisponível.",
 			);
 		}
 	}
@@ -273,7 +273,7 @@ export class SsoService {
 	private async requireConfigurer(userId: string): Promise<void> {
 		if (!canConfigureSso(await workspaceRoleOf(userId, this.db))) {
 			throw new ForbiddenException(
-				"Only an owner or an admin can change how people sign in.",
+				"Somente o proprietário ou um administrador pode alterar os métodos de entrada.",
 			);
 		}
 	}

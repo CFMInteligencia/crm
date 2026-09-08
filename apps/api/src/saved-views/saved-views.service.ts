@@ -115,7 +115,9 @@ export class SavedViewsService {
 	private translate(cause: unknown, id?: string): never {
 		if (cause instanceof PrismaNamespace.PrismaClientKnownRequestError) {
 			if (cause.code === "P2002") {
-				throw new ConflictException("You already have a view with that name.");
+				throw new ConflictException(
+					"Já existe uma visualização com este nome.",
+				);
 			}
 			if (cause.code === "P2025") {
 				throw new NotFoundException(`No saved view with id ${id}.`);

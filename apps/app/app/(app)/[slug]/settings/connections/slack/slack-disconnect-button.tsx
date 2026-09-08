@@ -86,7 +86,7 @@ export function SlackDisconnectButton({
 						>
 							<AsyncButtonContent
 								status={disconnectAction.status}
-								pendingLabel="Disconnecting…"
+								pendingLabel="Desconectando…"
 							>
 								Desconectar
 							</AsyncButtonContent>

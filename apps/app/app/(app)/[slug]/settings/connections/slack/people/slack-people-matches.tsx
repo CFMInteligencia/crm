@@ -59,7 +59,7 @@ export function SlackPeopleMatches({
 					onClick={() => refresh.mutate()}
 				>
 					{refreshing ? <Spinner data-icon="inline-start" /> : null}
-					{refreshing ? "Refreshing…" : "Atualizar dados do Slack"}
+					{refreshing ? "Atualizando…" : "Atualizar dados do Slack"}
 				</Button>
 			</div>
 			{matches.data.sync === "stalled" ? (

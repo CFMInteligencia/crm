@@ -65,7 +65,9 @@ export class RatesController {
 			this.logger.error({
 				message: "CRON_SECRET is not set — refusing to run the rates route.",
 			});
-			throw new ServiceUnavailableException("Rate refresh is not configured.");
+			throw new ServiceUnavailableException(
+				"A atualização de taxas não está configurada.",
+			);
 		}
 
 		if (!timingSafeEquals(authorization ?? "", `Bearer ${this.secret}`)) {

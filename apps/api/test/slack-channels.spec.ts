@@ -42,7 +42,7 @@ describe("creating a Slack channel", () => {
 		agentAnswers(502, "<html>Bad Gateway</html>");
 
 		await expect(service.create("deals", false)).rejects.toThrow(
-			"The agent failed, so the channel was not created.",
+			"O agente falhou. O canal não foi criado.",
 		);
 	});
 
@@ -50,7 +50,7 @@ describe("creating a Slack channel", () => {
 		agentAnswers(200, "not json at all");
 
 		await expect(service.create("deals", false)).rejects.toThrow(
-			"The agent answered with something unreadable, so the channel was not created.",
+			"A resposta do agente é inválida. O canal não foi criado.",
 		);
 	});
 
@@ -66,7 +66,7 @@ describe("creating a Slack channel", () => {
 		delete process.env.AGENT_BRIDGE_SECRET;
 
 		await expect(service.create("deals", false)).rejects.toThrow(
-			"This install has no AGENT_BRIDGE_SECRET, so nothing can reach Slack.",
+			"Configure AGENT_BRIDGE_SECRET para acessar o Slack.",
 		);
 	});
 });

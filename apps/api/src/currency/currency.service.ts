@@ -104,7 +104,7 @@ export class CurrencyService {
 	private async requireManager(userId: string): Promise<void> {
 		if (!canManageCurrency(await workspaceRoleOf(userId))) {
 			throw new ForbiddenException(
-				"Only an owner or an admin can change how money is reported.",
+				"Somente o proprietário ou um administrador pode alterar a moeda dos relatórios.",
 			);
 		}
 	}

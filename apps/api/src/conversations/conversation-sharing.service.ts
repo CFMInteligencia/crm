@@ -136,7 +136,9 @@ export class ConversationSharingService {
 		});
 
 		if (!share) {
-			throw new NotFoundException("That shared conversation is unavailable.");
+			throw new NotFoundException(
+				"Esta conversa compartilhada está indisponível.",
+			);
 		}
 
 		const { conversation } = share;
@@ -231,9 +233,7 @@ export class ConversationSharingService {
 		});
 
 		if (!member) {
-			throw new ForbiddenException(
-				"This conversation belongs to another team.",
-			);
+			throw new ForbiddenException("Esta conversa pertence a outra equipe.");
 		}
 	}
 }

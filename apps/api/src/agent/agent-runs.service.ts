@@ -187,7 +187,7 @@ export class AgentRunsService {
 			}
 
 			if (agent.status !== "LIVE" || !agent.currentVersionId) {
-				throw new BadRequestException("This agent is not live yet.");
+				throw new BadRequestException("Este agente ainda não está ativo.");
 			}
 
 			const active = await tx.agentRun.findFirst({
@@ -199,7 +199,7 @@ export class AgentRunsService {
 			});
 			if (active) {
 				throw new ConflictException(
-					"This agent already has an active run. Stop it or wait for it to finish.",
+					"Este agente já está em execução. Pare a execução ou aguarde o término.",
 				);
 			}
 
@@ -267,7 +267,7 @@ export class AgentRunsService {
 				throw new NotFoundException(`No run with id ${input.runId}.`);
 			}
 			if (CANCELLABLE_STATUSES.includes(previous.status)) {
-				throw new ConflictException("This run has not finished yet.");
+				throw new ConflictException("Esta execução ainda não terminou.");
 			}
 
 			const [agent] = await tx.$queryRaw<
@@ -282,7 +282,7 @@ export class AgentRunsService {
 				throw new NotFoundException(`No agent with id ${input.id}.`);
 			}
 			if (agent.status !== "LIVE" || !agent.currentVersionId) {
-				throw new BadRequestException("This agent is not live yet.");
+				throw new BadRequestException("Este agente ainda não está ativo.");
 			}
 
 			const active = await tx.agentRun.findFirst({
@@ -291,7 +291,7 @@ export class AgentRunsService {
 			});
 			if (active) {
 				throw new ConflictException(
-					"This agent already has an active run. Stop it or wait for it to finish.",
+					"Este agente já está em execução. Pare a execução ou aguarde o término.",
 				);
 			}
 
@@ -356,7 +356,7 @@ export class AgentRunsService {
 
 			if (!agent.canManage && run.initiatedById !== userId) {
 				throw new ForbiddenException(
-					"Only the person who started this run, or a workspace admin, can stop it.",
+					"Apenas quem iniciou a execução ou um administrador pode interrompê-la.",
 				);
 			}
 
@@ -439,7 +439,9 @@ export class AgentRunsService {
 		requestedAgentId: string,
 	) {
 		if (existingAgentId !== requestedAgentId) {
-			throw new BadRequestException("That run request has already been used.");
+			throw new BadRequestException(
+				"Esta solicitação de execução já foi processada.",
+			);
 		}
 	}
 }

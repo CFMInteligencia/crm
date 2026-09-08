@@ -61,7 +61,9 @@ export class TelemetryController {
 			this.logger.error({
 				message: "CRON_SECRET is not set — refusing to run the rollup route.",
 			});
-			throw new ServiceUnavailableException("Telemetry is not configured.");
+			throw new ServiceUnavailableException(
+				"A telemetria não está configurada.",
+			);
 		}
 
 		if (!timingSafeEquals(authorization ?? "", `Bearer ${this.secret}`)) {

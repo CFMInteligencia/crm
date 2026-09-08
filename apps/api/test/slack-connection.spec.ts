@@ -219,7 +219,7 @@ describe("Slack connection", () => {
 		});
 
 		await expect(service.disconnect(userId)).rejects.toThrow(
-			"Only an owner or an admin can disconnect Slack.",
+			"Somente o proprietário ou um administrador pode desconectar o Slack.",
 		);
 		expect(deleted).toEqual([]);
 	});

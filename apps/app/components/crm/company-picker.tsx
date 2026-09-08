@@ -79,9 +79,7 @@ export function CompanyPicker({
 			disabled={disabled}
 			placeholder={placeholder}
 			searchPlaceholder="Buscar empresas…"
-			empty={
-				companies.isFetching ? "Searching…" : "Nenhuma empresa encontrada."
-			}
+			empty={companies.isFetching ? "Buscando…" : "Nenhuma empresa encontrada."}
 			search={text}
 			onSearchChange={setText}
 			stale={stale}
@@ -126,7 +124,7 @@ export function CompanyMenuSearch({
 			/>
 			<CommandList>
 				<CommandEmpty>
-					{companies.isFetching ? "Searching…" : "Nenhuma empresa encontrada."}
+					{companies.isFetching ? "Buscando…" : "Nenhuma empresa encontrada."}
 				</CommandEmpty>
 				<CommandGroup>
 					{none && !query.trim() ? (

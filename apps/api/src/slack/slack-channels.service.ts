@@ -20,7 +20,7 @@ export class SlackChannelsService {
 
 		if (!agent) {
 			throw new ServiceUnavailableException(
-				"This install has no AGENT_BRIDGE_SECRET, so nothing can reach Slack.",
+				"Configure AGENT_BRIDGE_SECRET para acessar o Slack.",
 			);
 		}
 
@@ -46,7 +46,7 @@ export class SlackChannelsService {
 				error instanceof Error ? error.stack : String(error),
 			);
 			throw new ServiceUnavailableException(
-				"The agent is not answering, so the channel was not created.",
+				"O agente não responde. O canal não foi criado.",
 			);
 		}
 
@@ -57,7 +57,7 @@ export class SlackChannelsService {
 				status: response.status,
 			});
 			throw new ServiceUnavailableException(
-				"The agent failed, so the channel was not created.",
+				"O agente falhou. O canal não foi criado.",
 			);
 		}
 
@@ -72,7 +72,7 @@ export class SlackChannelsService {
 				status: response.status,
 			});
 			throw new ServiceUnavailableException(
-				"The agent answered with something unreadable, so the channel was not created.",
+				"A resposta do agente é inválida. O canal não foi criado.",
 			);
 		}
 
@@ -81,7 +81,7 @@ export class SlackChannelsService {
 		}
 
 		if (!response.ok) {
-			throw new BadRequestException("Slack refused to create that channel.");
+			throw new BadRequestException("O Slack recusou a criação do canal.");
 		}
 
 		return { channel: reply.data.channel };

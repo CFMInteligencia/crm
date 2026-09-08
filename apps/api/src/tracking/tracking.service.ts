@@ -37,7 +37,6 @@ import type {
 	TrackedDomainRow,
 	TrackingSettings,
 	VerifyResult,
-	VisitedPage,
 	WebsiteActivity,
 } from "./tracking.contracts";
 import { TrackingConfigService } from "./tracking-config.service";
@@ -145,7 +144,7 @@ export class TrackingService {
 		await this.assertCanManage(userId);
 
 		if (!COOKIE_LIFETIMES.some((entry) => entry.days === days)) {
-			throw new BadRequestException("That is not a cookie lifetime we offer.");
+			throw new BadRequestException("Selecione um prazo válido para o cookie.");
 		}
 
 		await this.db.appSetting.upsert({
@@ -166,7 +165,7 @@ export class TrackingService {
 		const host = normalizeHost(input.host);
 		if (!host) {
 			throw new BadRequestException(
-				"That is not a domain. Try something like acme.com.",
+				"Informe um domínio válido, como empresa.com.br.",
 			);
 		}
 
@@ -206,7 +205,7 @@ export class TrackingService {
 				error instanceof Prisma.PrismaClientKnownRequestError &&
 				error.code === "P2025"
 			) {
-				throw new NotFoundException("That domain is already gone.");
+				throw new NotFoundException("Este domínio já foi removido.");
 			}
 
 			throw error;
@@ -232,14 +231,14 @@ export class TrackingService {
 
 		if (!trackingReady(row?.trackingLimitToDomains ?? true, domains)) {
 			throw new BadRequestException(
-				"Add the domain your website runs on first — there is no script to find yet.",
+				"Adicione o domínio do site antes de verificar o script.",
 			);
 		}
 
 		const target = absolute(url);
 		if (!target) {
 			throw new BadRequestException(
-				"That is not a URL. Try something like acme.com/pricing.",
+				"Informe uma URL válida, como empresa.com.br/precos.",
 			);
 		}
 
@@ -476,7 +475,7 @@ export class TrackingService {
 	private async assertCanManage(userId: string): Promise<void> {
 		if (!canManageTracking(await this.roleOf(userId))) {
 			throw new ForbiddenException(
-				"Only an owner or an admin can change tracking.",
+				"Somente o proprietário ou um administrador pode alterar o rastreamento.",
 			);
 		}
 	}

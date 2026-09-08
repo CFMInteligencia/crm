@@ -75,7 +75,7 @@ export class WorkspaceService {
 
 		if (!row) {
 			throw new ServiceUnavailableException(
-				"The workspace could not be read. Sign in again in a moment.",
+				"Não foi possível carregar a empresa. Entre novamente.",
 			);
 		}
 
@@ -101,7 +101,7 @@ export class WorkspaceService {
 
 		if (!canRenameWorkspace(role)) {
 			throw new ForbiddenException(
-				"Only an owner or an admin can change the workspace.",
+				"Somente o proprietário ou um administrador pode alterar a empresa.",
 			);
 		}
 
@@ -114,7 +114,7 @@ export class WorkspaceService {
 
 		if (!website) {
 			throw new BadRequestException(
-				"That is not a website. Enter the domain, like acme.com.",
+				"Informe um domínio válido para o site, como empresa.com.br.",
 			);
 		}
 
@@ -180,7 +180,7 @@ export class WorkspaceService {
 
 		if (!canChangeRole(role)) {
 			throw new ForbiddenException(
-				"Only an owner or an admin can change a member's role.",
+				"Somente o proprietário ou um administrador pode alterar permissões de integrantes.",
 			);
 		}
 
@@ -191,7 +191,7 @@ export class WorkspaceService {
 			});
 
 			if (!target) {
-				throw new NotFoundException("That person is not in this workspace.");
+				throw new NotFoundException("Esta pessoa não participa da equipe.");
 			}
 
 			if (target.role === "owner" && input.role !== "owner") {
@@ -203,7 +203,7 @@ export class WorkspaceService {
 
 				if (owners.length <= 1) {
 					throw new ForbiddenException(
-						"The workspace needs an owner. Make someone else an owner first.",
+						"A empresa precisa de um proprietário. Defina outro proprietário antes de continuar.",
 					);
 				}
 			}
