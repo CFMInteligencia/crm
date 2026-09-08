@@ -17,13 +17,13 @@ import { useTRPC } from "@/lib/trpc/client";
 const RULES = [
 	{
 		flag: "crossDomain",
-		label: "Automatic cross-domain linking",
-		hint: "Carry the visitor between the domains below, so one journey is not counted as two people",
+		label: "Vinculação automática entre domínios",
+		hint: "Identificar o mesmo visitante entre os domínios abaixo",
 	},
 	{
 		flag: "limitToDomains",
-		label: "Limit tracking to the domains below",
-		hint: "On any other domain the script loads and then does nothing",
+		label: "Limitar rastreamento aos domínios abaixo",
+		hint: "Não registrar dados em outros domínios",
 	},
 ] as const;
 
@@ -47,9 +47,9 @@ export function TrackingRules() {
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>Tracking rules</CardTitle>
+				<CardTitle>Regras de rastreamento</CardTitle>
 				<CardDescription>
-					Where the script may run, and how it follows a visitor.
+					Domínios permitidos e identificação de visitantes.
 				</CardDescription>
 			</CardHeader>
 

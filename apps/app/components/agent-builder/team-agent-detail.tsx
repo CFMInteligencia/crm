@@ -51,7 +51,7 @@ type AgentDetail = RouterOutputs["agents"]["byId"];
 type ReviewVersion = AgentDetail["reviewVersion"];
 type Runs = RouterOutputs["agents"]["history"];
 type Activity = RouterOutputs["agents"]["activity"];
-const DATE_FORMATTER = new Intl.DateTimeFormat("en-US", {
+const DATE_FORMATTER = new Intl.DateTimeFormat("pt-BR", {
 	month: "short",
 	day: "numeric",
 	hour: "numeric",
@@ -60,7 +60,7 @@ const DATE_FORMATTER = new Intl.DateTimeFormat("en-US", {
 	timeZone: "UTC",
 	timeZoneName: "short",
 });
-const _TIME_FORMATTER = new Intl.DateTimeFormat("en-US", {
+const _TIME_FORMATTER = new Intl.DateTimeFormat("pt-BR", {
 	hour: "2-digit",
 	minute: "2-digit",
 	second: "2-digit",
@@ -117,7 +117,7 @@ export function TeamAgentDetail({
 			onSuccess: async () => {
 				await invalidate();
 				setRunsOpen(true);
-				toast.success("Agent run queued.");
+				toast.success("Execução do agente adicionada à fila.");
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -138,7 +138,7 @@ export function TeamAgentDetail({
 		trpc.agents.retryRun.mutationOptions({
 			onSuccess: async () => {
 				await invalidate();
-				toast.success("Run queued again.");
+				toast.success("Execução adicionada novamente à fila.");
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -148,7 +148,9 @@ export function TeamAgentDetail({
 			onSuccess: async (result) => {
 				await invalidate();
 				toast.success(
-					result.cancelled ? "Run stopped." : "That run had already finished.",
+					result.cancelled
+						? "Execução interrompida."
+						: "Esta execução já terminou.",
 				);
 			},
 			onError: (error) => toast.error(error.message),
@@ -173,7 +175,7 @@ export function TeamAgentDetail({
 			<PageShell>
 				<PageShellHeader>
 					<PageShellHeading>
-						<PageShellTitle>Agent unavailable</PageShellTitle>
+						<PageShellTitle>Agente indisponível</PageShellTitle>
 						<PageShellDescription>{agent.error.message}</PageShellDescription>
 					</PageShellHeading>
 				</PageShellHeader>
@@ -200,7 +202,8 @@ export function TeamAgentDetail({
 	const nextRun =
 		enabledTriggers.length === 1 ? enabledTriggers[0]?.nextRunAt : null;
 	const triggerSummary =
-		enabledTriggers.map((trigger) => trigger.name).join(" · ") || "Manual only";
+		enabledTriggers.map((trigger) => trigger.name).join(" · ") ||
+		"Somente manual";
 
 	return (
 		<PageShell className="min-h-0" contained>
@@ -212,8 +215,8 @@ export function TeamAgentDetail({
 					<PageShellDescription className="wrap-break-word leading-6">
 						<span className="block">{displayedDescription}</span>
 						<span className="mt-2 block text-xs">
-							Created by {data.createdBy.name} ·{" "}
-							{isDraft ? "Private draft" : "Team agent"} · Version{" "}
+							Criado por {data.createdBy.name} ·{" "}
+							{isDraft ? "Rascunho privado" : "Agente da equipe"} · Versão{" "}
 							{displayedVersionNumber ?? "—"}
 						</span>
 					</PageShellDescription>
@@ -221,24 +224,24 @@ export function TeamAgentDetail({
 				<PageShellActions className="col-start-1 row-start-3 justify-self-start sm:col-start-2 sm:row-start-1 sm:justify-self-end">
 					<div className="flex min-w-0 flex-col items-start gap-2 sm:items-end">
 						<span className="text-muted-foreground text-xs">
-							{isDraft ? "Visibility" : "Trigger"}
+							{isDraft ? "Visibilidade" : "Acionamento"}
 						</span>
 						<span className="font-mono text-sm">
 							{isDraft
-								? "Private draft"
+								? "Rascunho privado"
 								: nextRun
 									? formatDate(nextRun)
 									: triggerSummary}
 						</span>
 						<div className="mt-1 flex flex-wrap gap-2">
 							<Button onClick={() => setRunsOpen(true)} variant="outline">
-								Runs
+								Execuções
 								<span className="font-mono text-muted-foreground">
 									{data.runCount}
 								</span>
 							</Button>
 							<Button asChild variant="outline">
-								<Link href={workspaceUrl("/chat")}>Open in chat</Link>
+								<Link href={workspaceUrl("/chat")}>Abrir na conversa</Link>
 							</Button>
 							{isDraft && data.canManage ? (
 								<DraftAgentActions
@@ -255,12 +258,12 @@ export function TeamAgentDetail({
 								>
 									<AsyncButtonContent
 										status={runAction.status}
-										pendingLabel="Queueing"
-										successLabel="Queued"
-										errorLabel="Try again"
+										pendingLabel="Adicionando à fila"
+										successLabel="Na fila"
+										errorLabel="Tentar novamente"
 									>
 										<Icon icon={Play} data-icon="inline-start" />
-										Run now
+										Executar agora
 									</AsyncButtonContent>
 								</Button>
 							) : null}
@@ -273,12 +276,12 @@ export function TeamAgentDetail({
 								>
 									<AsyncButtonContent
 										status={pauseAction.status}
-										pendingLabel="Pausing"
-										successLabel="Paused"
-										errorLabel="Try again"
+										pendingLabel="Pausando"
+										successLabel="Pausado"
+										errorLabel="Tentar novamente"
 									>
 										<Icon icon={Pause} data-icon="inline-start" />
-										Pause
+										Pausar
 									</AsyncButtonContent>
 								</Button>
 							) : null}
@@ -291,12 +294,12 @@ export function TeamAgentDetail({
 								>
 									<AsyncButtonContent
 										status={resumeAction.status}
-										pendingLabel="Resuming"
-										successLabel="Resumed"
-										errorLabel="Try again"
+										pendingLabel="Retomando"
+										successLabel="Retomado"
+										errorLabel="Tentar novamente"
 									>
 										<Icon icon={Play} data-icon="inline-start" />
-										Resume
+										Retomar
 									</AsyncButtonContent>
 								</Button>
 							) : null}
@@ -373,7 +376,7 @@ function DraftAgentActions({
 						queryKey: trpc.conversations.builderList.pathKey(),
 					}),
 				]);
-				toast.success("Agent deployed to the team.");
+				toast.success("Agente publicado para a equipe.");
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -397,7 +400,7 @@ function DraftAgentActions({
 						href={workspaceUrl(`/chat/${version.sourceConversationId}`)}
 						transitionTypes={["nav-back"]}
 					>
-						Change details
+						Alterar detalhes
 					</Link>
 				</Button>
 			) : null}
@@ -408,11 +411,11 @@ function DraftAgentActions({
 			>
 				<AsyncButtonContent
 					status={deployAction.status}
-					pendingLabel="Deploying"
-					successLabel="Deployed"
-					errorLabel="Try again"
+					pendingLabel="Publicando"
+					successLabel="Publicado"
+					errorLabel="Tentar novamente"
 				>
-					Deploy agent
+					Publicar agente
 				</AsyncButtonContent>
 			</Button>
 			<DeleteAgentAction agentId={agentId} name={name} />
@@ -445,7 +448,7 @@ function DeleteAgentAction({
 					}),
 				]);
 				setConfirming(false);
-				toast.success(`${name} was deleted.`);
+				toast.success(`${name}: excluído.`);
 				router.replace(workspaceUrl("/agents"));
 			},
 			onError: (error) => toast.error(error.message),
@@ -465,7 +468,7 @@ function DeleteAgentAction({
 						disabled={removeAction.pending}
 					>
 						<Icon icon={OverflowMenuVertical} />
-						<span className="sr-only">More agent actions</span>
+						<span className="sr-only">Mais ações do agente</span>
 					</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align="end">
@@ -474,7 +477,7 @@ function DeleteAgentAction({
 						onSelect={() => setConfirming(true)}
 					>
 						<Icon icon={TrashCan} />
-						Delete agent
+						Excluir agente
 					</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>
@@ -487,17 +490,16 @@ function DeleteAgentAction({
 			>
 				<AlertDialogContent>
 					<AlertDialogHeader>
-						<AlertDialogTitle>Delete {name}?</AlertDialogTitle>
+						<AlertDialogTitle>Excluir {name}?</AlertDialogTitle>
 						<AlertDialogDescription>
-							This removes it from the team agent list, disables its triggers,
-							and cancels queued runs. Its run and action history stays in the
-							audit log. A run already in progress may finish.
+							Remove o agente, desativa acionamentos e cancela a fila. O
+							histórico permanece. Execuções em andamento podem terminar.
 						</AlertDialogDescription>
 					</AlertDialogHeader>
 
 					<AlertDialogFooter>
 						<AlertDialogCancel disabled={removeAction.pending}>
-							Cancel
+							Cancelar
 						</AlertDialogCancel>
 						<Button
 							variant="destructive"
@@ -507,11 +509,11 @@ function DeleteAgentAction({
 						>
 							<AsyncButtonContent
 								status={removeAction.status}
-								pendingLabel="Deleting"
-								successLabel="Deleted"
-								errorLabel="Try again"
+								pendingLabel="Excluindo"
+								successLabel="Excluído"
+								errorLabel="Tentar novamente"
 							>
-								Delete agent
+								Excluir agente
 							</AsyncButtonContent>
 						</Button>
 					</AlertDialogFooter>
@@ -529,7 +531,7 @@ function AgentOverview({ agent }: { agent: AgentDetail }) {
 	if (!capabilities) {
 		return (
 			<p className="text-muted-foreground text-sm">
-				This agent has no deployed version yet.
+				Este agente ainda não tem uma versão publicada.
 			</p>
 		);
 	}
@@ -539,8 +541,7 @@ function AgentOverview({ agent }: { agent: AgentDetail }) {
 			<div className="flex flex-col gap-9">
 				{deployed ? null : (
 					<p className="text-muted-foreground text-sm">
-						This is a draft. Deploy it to the team before you change what it can
-						do.
+						Este agente é um rascunho. Publique-o para alterar suas permissões.
 					</p>
 				)}
 				<AgentCapabilities

@@ -19,7 +19,7 @@ export function DatePicker({
 	id,
 	value,
 	onChange,
-	placeholder = "Select a date",
+	placeholder = "Selecionar data",
 	variant,
 }: {
 	id?: string;
@@ -75,7 +75,7 @@ export function DatePicker({
 							className="w-full justify-start"
 							onClick={() => choose("")}
 						>
-							Clear
+							Limpar
 						</Button>
 					</div>
 				) : null}

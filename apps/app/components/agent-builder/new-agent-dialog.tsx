@@ -81,7 +81,7 @@ export function NewAgentDialog({ children }: { children: React.ReactNode }) {
 						: null,
 					allowed,
 				},
-				"This agent",
+				"Este agente",
 			);
 
 			create.mutate({
@@ -95,7 +95,7 @@ export function NewAgentDialog({ children }: { children: React.ReactNode }) {
 			toast.error(
 				error instanceof InvalidInput
 					? error.message
-					: "Could not hand this to the builder.",
+					: "Não foi possível enviar ao criador de agentes.",
 			);
 		}
 	};
@@ -106,40 +106,40 @@ export function NewAgentDialog({ children }: { children: React.ReactNode }) {
 
 			<DialogContent className="sm:max-w-(--container-sheet)">
 				<DialogHeader>
-					<DialogTitle>New agent</DialogTitle>
+					<DialogTitle>Novo agente</DialogTitle>
 					<DialogDescription>
-						Say what it is and where it lives. The builder writes the rest. You
-						can change all of this later.
+						Descreva a tarefa e o destino. O criador prepara o agente. Você pode
+						alterar os dados depois.
 					</DialogDescription>
 				</DialogHeader>
 
 				<div className="flex flex-col gap-4">
 					<div className="flex flex-col gap-1.5">
-						<Label htmlFor="agent-name">Name</Label>
+						<Label htmlFor="agent-name">Nome</Label>
 						<Input
 							id="agent-name"
 							onChange={(event) => setName(event.target.value)}
-							placeholder="Renewal prep brief"
+							placeholder="Resumo para renovação"
 							value={name}
 						/>
 					</div>
 
 					<div className="flex flex-col gap-1.5">
-						<Label htmlFor="agent-job">What it should do</Label>
+						<Label htmlFor="agent-job">O que deve fazer</Label>
 						<Textarea
 							id="agent-job"
 							onChange={(event) => setJob(event.target.value)}
-							placeholder="A week before a renewal, gather the account history and post a short brief for whoever owns the deal."
+							placeholder="Uma semana antes da renovação, reunir o histórico e enviar um resumo ao responsável pelo negócio."
 							rows={3}
 							value={job}
 						/>
 					</div>
 
 					<div className="flex flex-col gap-1.5">
-						<Label htmlFor="agent-channel">Lives in</Label>
+						<Label htmlFor="agent-channel">Local</Label>
 						<Select onValueChange={setChannelId} value={channelId}>
 							<SelectTrigger id="agent-channel">
-								<SelectValue placeholder="Pick a Slack channel" />
+								<SelectValue placeholder="Selecionar canal do Slack" />
 							</SelectTrigger>
 							<SelectContent>
 								{rows.map((row) => (
@@ -152,14 +152,14 @@ export function NewAgentDialog({ children }: { children: React.ReactNode }) {
 						<p className="text-muted-foreground text-xs">
 							{channel
 								? channel.isMember
-									? `Comp AI is already in #${channel.name}.`
-									: `Comp AI is not in #${channel.name} yet. It joins when you create this.`
-								: "Leave this empty and the builder will ask."}
+									? `Comp AI já participa de #${channel.name}.`
+									: `Comp AI entra em #${channel.name} ao criar este agente.`
+								: "Deixe vazio para definir durante a criação."}
 						</p>
 					</div>
 
 					<div className="flex flex-col gap-1.5">
-						<Label>Allowed to</Label>
+						<Label>Permissões</Label>
 						<div className="flex flex-wrap gap-2">
 							{schemas.agents.permissions.map((entry) => {
 								const on = allowed.includes(entry.id);
@@ -195,17 +195,17 @@ export function NewAgentDialog({ children }: { children: React.ReactNode }) {
 
 				<DialogFooter className="items-center">
 					<p className="mr-auto text-muted-foreground text-xs">
-						Nothing sends until you turn it on.
+						Nenhum envio ocorre antes da ativação.
 					</p>
 					<Button
 						disabled={create.isPending}
 						onClick={() => setOpen(false)}
 						variant="outline"
 					>
-						Cancel
+						Cancelar
 					</Button>
 					<Button disabled={!ready || create.isPending} onClick={hand}>
-						{create.isPending ? "Handing over…" : "Hand to the builder"}
+						{create.isPending ? "Encaminhando…" : "Enviar ao criador"}
 					</Button>
 				</DialogFooter>
 			</DialogContent>

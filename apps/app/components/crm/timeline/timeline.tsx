@@ -32,43 +32,42 @@ export type TimelineAnchor =
 	| { dealId: string };
 
 const TAB_LABELS = {
-	all: "All",
-	notes: "Notes",
-	email: "Email",
-	meetings: "Meetings",
-	upcoming: "Upcoming",
-	done: "Done",
+	all: "Todos",
+	notes: "Notas",
+	email: "E-mail",
+	meetings: "Reuniões",
+	upcoming: "Próximas",
+	done: "Concluído",
 } satisfies Record<TimelineTab, string>;
 
 const EMPTY_STATES = {
 	all: {
-		title: "Nothing has happened yet",
+		title: "Nenhuma atividade registrada",
 		description:
-			"Calls, notes, emails and meetings all land here. Log the first one above, or wait for Gmail and Calendar to sync.",
+			"Ligações, notas, e-mails e reuniões aparecem aqui. Registre uma atividade ou sincronize Gmail e Agenda.",
 	},
 	notes: {
-		title: "No notes",
+		title: "Nenhuma nota",
 		description:
-			"Notes are what you write down for the next person to read — what they care about, who else is involved, what you promised.",
+			"Registre interesses, participantes e compromissos para manter a equipe informada.",
 	},
 	email: {
-		title: "No email",
+		title: "Nenhum e-mail",
 		description:
-			"Threads appear here as they are synced from Gmail. Nothing from before this mailbox was connected is imported.",
+			"As conversas aparecem após sincronizar o Gmail. E-mails anteriores à conexão não são importados.",
 	},
 	meetings: {
-		title: "No meetings",
+		title: "Nenhuma reunião",
 		description:
-			"Calendar events with someone from this record on them show up here, past and upcoming.",
+			"Reuniões anteriores e futuras com os contatos deste registro aparecem aqui.",
 	},
 	upcoming: {
-		title: "Nothing outstanding",
-		description:
-			"Tasks you have not finished appear here, and at the top of the All tab until they are done.",
+		title: "Nenhuma pendência",
+		description: "Tarefas pendentes aparecem aqui e no início da aba Todos.",
 	},
 	done: {
-		title: "Nothing finished yet",
-		description: "Tasks move here once you tick them off.",
+		title: "Nenhuma tarefa concluída",
+		description: "Tarefas marcadas como concluídas aparecem aqui.",
 	},
 } satisfies Record<TimelineTab, { title: string; description: string }>;
 
@@ -81,7 +80,7 @@ const EMPTY_ICONS = {
 	done: Checkmark,
 } satisfies Record<TimelineTab, CarbonIcon>;
 
-const dayFormat = new Intl.DateTimeFormat("en-US", {
+const dayFormat = new Intl.DateTimeFormat("pt-BR", {
 	weekday: "short",
 	month: "short",
 	day: "numeric",
@@ -96,8 +95,8 @@ function dayLabel(day: string, local: boolean): string {
 		: new Date(Date.now() - 86_400_000);
 	const yesterday = dayKey(yesterdayDate.toISOString(), local);
 
-	if (day === today) return "Today";
-	if (day === yesterday) return "Yesterday";
+	if (day === today) return "Hoje";
+	if (day === yesterday) return "Ontem";
 	return dayFormat.format(new Date(`${day}T00:00:00`));
 }
 
@@ -225,7 +224,7 @@ export function Timeline({ anchor }: { anchor: TimelineAnchor }) {
 				<div className="flex min-h-0 flex-1 flex-col overflow-y-auto px-5 pb-4">
 					{pinnedEntries.length > 0 ? (
 						<TimelineDay
-							label="Outstanding"
+							label="Pendentes"
 							entries={pinnedEntries}
 							anchor={anchor}
 						/>
@@ -249,7 +248,7 @@ export function Timeline({ anchor }: { anchor: TimelineAnchor }) {
 							onClick={() => history.fetchNextPage()}
 						>
 							{history.isFetchingNextPage ? <Spinner /> : null}
-							Show older
+							Exibir anteriores
 						</Button>
 					) : null}
 				</div>

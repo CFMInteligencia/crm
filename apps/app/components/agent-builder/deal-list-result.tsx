@@ -18,18 +18,18 @@ import type { DealListItem, DealListResult } from "@/lib/agent-transcript";
 import { DEAL_STAGE_OPTIONS } from "@/lib/deal-stage";
 
 const COLUMNS: SimpleTableColumn[] = [
-	{ id: "deal", header: "Deal", width: "w-[20%]" },
-	{ id: "company", header: "Company", width: "w-[18%]" },
-	{ id: "stage", header: "Stage", width: "w-[18%]" },
+	{ id: "deal", header: "Negócio", width: "w-[20%]" },
+	{ id: "company", header: "Empresa", width: "w-[18%]" },
+	{ id: "stage", header: "Etapa", width: "w-[18%]" },
 	{
 		id: "amount",
-		header: "Amount",
+		header: "Valor",
 		width: "w-[12%]",
 		align: "right",
 	},
-	{ id: "owner", header: "Owner", width: "w-[14%]" },
-	{ id: "close", header: "Close date", width: "w-[12%]" },
-	{ id: "idle", header: "Idle", width: "w-[8%]", align: "right" },
+	{ id: "owner", header: "Responsável", width: "w-[14%]" },
+	{ id: "close", header: "Data de fechamento", width: "w-[12%]" },
+	{ id: "idle", header: "Ocioso", width: "w-[8%]", align: "right" },
 ];
 
 export function DealListResultTable({ result }: { result: DealListResult }) {
@@ -51,7 +51,7 @@ export function DealListResultTable({ result }: { result: DealListResult }) {
 							colSpan={COLUMNS.length}
 							className="h-32 whitespace-normal py-8 text-center align-middle text-muted-foreground"
 						>
-							No deals met these pipeline filters.
+							Nenhum negócio corresponde aos filtros do funil.
 						</TableCell>
 					</SimpleTableRow>
 				) : (
@@ -105,7 +105,7 @@ export function DealListResultTable({ result }: { result: DealListResult }) {
 									className="overflow-hidden px-3 py-3 text-right text-muted-foreground tabular-nums"
 									title={
 										deal.neverActive
-											? "No activity has ever been recorded"
+											? "Nenhuma atividade registrada"
 											: undefined
 									}
 								>
@@ -119,7 +119,7 @@ export function DealListResultTable({ result }: { result: DealListResult }) {
 			<div className="flex flex-wrap items-center justify-between gap-3 text-muted-foreground text-xs">
 				<span>{tableMeta(result)}</span>
 				<span>
-					As of <LocalDay date={result.asOf} />
+					Atualizado em <LocalDay date={result.asOf} />
 				</span>
 			</div>
 		</section>
@@ -143,18 +143,18 @@ function tableTitle(result: DealListResult): string {
 		result.criteria.status === "all" ? "" : `${result.criteria.status} `;
 	const stale = result.criteria.inactiveForDays === null ? "" : "stale ";
 	return count === 0
-		? "No matching deals"
-		: `${count} ${stale}${status}deal${count === 1 ? "" : "s"}`;
+		? "Nenhum negócio encontrado"
+		: `${count} ${stale}${status}negócio${count === 1 ? "" : "s"}`;
 }
 
 function tableMeta(result: DealListResult): string {
 	const details = [
-		`${result.deals.length} deal${result.deals.length === 1 ? "" : "s"}`,
+		`${result.deals.length} negócio${result.deals.length === 1 ? "" : "s"}`,
 		pipelineTotal(result.deals),
 		result.criteria.inactiveForDays === null
 			? null
-			: `${result.criteria.inactiveForDays}+ days inactive`,
-		result.hasMore ? "More results available" : null,
+			: `${result.criteria.inactiveForDays}+ dias sem atividade`,
+		result.hasMore ? "Mais resultados disponíveis" : null,
 	].filter((detail): detail is string => Boolean(detail));
 
 	return details.join(" · ");
@@ -176,5 +176,5 @@ function pipelineTotal(deals: readonly DealListItem[]): string | null {
 	if (!currency) return null;
 
 	const amount = deals.reduce((sum, deal) => sum + (deal.amount ?? 0), 0);
-	return `${formatMoney(Math.round(amount * 100), currency)} pipeline`;
+	return `${formatMoney(Math.round(amount * 100), currency)} no funil`;
 }

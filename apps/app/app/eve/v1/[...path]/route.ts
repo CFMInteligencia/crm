@@ -12,14 +12,14 @@ async function handler(request: Request): Promise<Response> {
 
 	if (!bridgeConfigured()) {
 		return Response.json(
-			{ error: "The research agent is not configured for this install." },
+			{ error: "O agente de pesquisa não está configurado nesta instalação." },
 			{ status: 503 },
 		);
 	}
 
 	const session = await getSession();
 	if (!session) {
-		return Response.json({ error: "Not signed in." }, { status: 401 });
+		return Response.json({ error: "Sessão não iniciada." }, { status: 401 });
 	}
 
 	const url = new URL(request.url);
@@ -62,7 +62,7 @@ async function handler(request: Request): Promise<Response> {
 		});
 		if (conversation && conversation.userId !== session.user.id) {
 			return Response.json(
-				{ error: "Conversation not found." },
+				{ error: "Conversa não encontrada." },
 				{ status: 404 },
 			);
 		}
@@ -82,7 +82,7 @@ async function handler(request: Request): Promise<Response> {
 			(requestedSession && conversation.sessionId !== requestedSession)
 		) {
 			return Response.json(
-				{ error: "Conversation not found." },
+				{ error: "Conversa não encontrada." },
 				{ status: 404 },
 			);
 		}
@@ -122,7 +122,7 @@ async function handler(request: Request): Promise<Response> {
 	} catch (error) {
 		return Response.json(
 			{
-				error: "The research agent is not reachable.",
+				error: "O agente de pesquisa está indisponível.",
 				detail: error instanceof Error ? error.message : String(error),
 			},
 			{ status: 502 },

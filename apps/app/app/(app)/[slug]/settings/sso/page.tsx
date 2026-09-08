@@ -30,8 +30,8 @@ export default function SsoSettingsPage({
 				<PageShellHeading>
 					<PageShellTitle>SSO</PageShellTitle>
 					<PageShellDescription>
-						Let your people sign in through your own identity provider. While
-						one is configured, the sign-in page offers it instead of Google.
+						Permita que a equipe use seu provedor de identidade. Quando
+						configurado, ele substitui o Google na tela de entrada.
 					</PageShellDescription>
 				</PageShellHeading>
 

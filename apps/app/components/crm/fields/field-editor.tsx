@@ -88,16 +88,16 @@ type Draft = {
 };
 
 const TYPE_HINTS = {
-	TEXT: "Text — a short line",
-	LONG_TEXT: "Long text — a paragraph",
-	NUMBER: "Number",
-	DATE: "Date",
-	CHECKBOX: "Checkbox — yes or no",
-	SELECT: "Select — one of a fixed list",
+	TEXT: "Texto — uma linha",
+	LONG_TEXT: "Texto longo — um parágrafo",
+	NUMBER: "Número",
+	DATE: "Data",
+	CHECKBOX: "Caixa de seleção — sim ou não",
+	SELECT: "Seleção — uma opção da lista",
 	URL: "URL",
-	EMAIL: "Email",
-	PHONE: "Phone",
-	USER: "User — someone in the workspace",
+	EMAIL: "E-mail",
+	PHONE: "Telefone",
+	USER: "Usuário — integrante da equipe",
 } satisfies Record<(typeof FIELD_TYPES)[number], string>;
 
 function optionId(option: { id?: string }, index: number): string {
@@ -133,7 +133,7 @@ function Coverage({ field }: { field: FieldRecord }) {
 	const backfill = useMutation(
 		trpc.fields.backfill.mutationOptions({
 			onSuccess: async () => {
-				toast.success("Your agents will pick this up.");
+				toast.success("Os agentes recebem esta alteração.");
 				await cache.fieldCoverage(field.id);
 			},
 			onError: (error) => toast.error(error.message),
@@ -153,10 +153,10 @@ function Coverage({ field }: { field: FieldRecord }) {
 					<StatusIndicator
 						tone="primary"
 						className="font-medium text-foreground"
-						label={`Filled on ${filled} of ${total} ${noun}`}
+						label={`Preenchido em ${filled} de ${total} ${noun}`}
 					/>
 					<span className="pl-4 text-muted-foreground text-xs">
-						{covered ? ALL_FILLED : `${total - filled} still to go`}
+						{covered ? ALL_FILLED : `${total - filled} pendentes`}
 					</span>
 				</div>
 				<Button
@@ -366,7 +366,7 @@ export function FieldEditor({
 											>
 												<Icon icon={Close} />
 												<span className="sr-only">
-													Remove {optionLabel(index)}
+													Remover {optionLabel(index)}
 												</span>
 											</Button>
 										</SortableItem>
@@ -442,9 +442,9 @@ export function FieldEditor({
 				<AlertDialog open={confirming} onOpenChange={setConfirming}>
 					<AlertDialogContent>
 						<AlertDialogHeader>
-							<AlertDialogTitle>Archive {field.label}?</AlertDialogTitle>
+							<AlertDialogTitle>Arquivar {field.label}?</AlertDialogTitle>
 							<AlertDialogDescription>
-								Hidden everywhere. Its values are kept.
+								Oculto em todas as telas. Os valores permanecem.
 							</AlertDialogDescription>
 						</AlertDialogHeader>
 						<AlertDialogFooter>
@@ -453,7 +453,7 @@ export function FieldEditor({
 								variant="destructive"
 								onClick={() => archive.mutate({ id: field.id })}
 							>
-								Archive field
+								Arquivar campo
 							</AlertDialogAction>
 						</AlertDialogFooter>
 					</AlertDialogContent>

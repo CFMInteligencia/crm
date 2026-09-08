@@ -55,13 +55,13 @@ export function VerifyInstallation() {
 			<CardHeader>
 				<CardTitle>
 					<div className="flex items-center gap-2">
-						Verify installation
+						Verificar instalação
 						{result ? <Indicator result={result} /> : null}
 					</div>
 				</CardTitle>
 				<CardDescription>
-					We load one page and look for the script, then read your Tag Manager
-					container if it is not in the HTML.
+					Verificamos o script na página e, se necessário, no contêiner do Tag
+					Manager.
 				</CardDescription>
 
 				<CardAction>
@@ -72,7 +72,7 @@ export function VerifyInstallation() {
 						disabled={!canManage || verify.isPending || url.trim() === ""}
 					>
 						{verify.isPending ? <Spinner data-icon="inline-start" /> : null}
-						Check now
+						Verificar agora
 					</Button>
 				</CardAction>
 			</CardHeader>
@@ -87,7 +87,7 @@ export function VerifyInstallation() {
 					}}
 				>
 					<Field>
-						<FieldLabel htmlFor={urlId}>Page to check</FieldLabel>
+						<FieldLabel htmlFor={urlId}>Página para verificar</FieldLabel>
 						<InputGroup>
 							<InputGroupAddon>
 								<InputGroupText>https://</InputGroupText>
@@ -109,8 +109,8 @@ export function VerifyInstallation() {
 							/>
 						</InputGroup>
 						<FieldDescription>
-							The page has to be public. A page behind a login always fails this
-							check.
+							A página deve ser pública. Páginas com login não podem ser
+							verificadas.
 						</FieldDescription>
 					</Field>
 				</form>
@@ -124,7 +124,7 @@ export function VerifyInstallation() {
 function Indicator({ result }: { result: Result }) {
 	if (result.status === "found" && result.pageView) {
 		return (
-			<StatusIndicator size="sm" tone="success" label="Verified just now" />
+			<StatusIndicator size="sm" tone="success" label="Verificado agora" />
 		);
 	}
 
@@ -133,7 +133,7 @@ function Indicator({ result }: { result: Result }) {
 			<StatusIndicator
 				size="sm"
 				tone="warning"
-				label="Tag Manager needs a fix"
+				label="O Tag Manager precisa de ajuste"
 			/>
 		);
 	}
@@ -142,7 +142,11 @@ function Indicator({ result }: { result: Result }) {
 		<StatusIndicator
 			size="sm"
 			tone="warning"
-			label={result.status === "found" ? "No page view yet" : "Not detected"}
+			label={
+				result.status === "found"
+					? "Nenhuma visita registrada"
+					: "Não detectado"
+			}
 		/>
 	);
 }
@@ -152,10 +156,10 @@ function Outcome({ result, siteId }: { result: Result; siteId: string }) {
 		return (
 			<Alert variant="destructive">
 				<Icon icon={Warning} />
-				<AlertTitle>Could not open {result.host}</AlertTitle>
+				<AlertTitle>Não foi possível abrir {result.host}</AlertTitle>
 				<AlertDescription>
-					{result.detail} We only follow public pages, and we never follow a
-					redirect to a private address.
+					{result.detail} A verificação aceita apenas páginas públicas e não
+					acessa endereços privados.
 				</AlertDescription>
 			</Alert>
 		);
@@ -165,13 +169,13 @@ function Outcome({ result, siteId }: { result: Result; siteId: string }) {
 		return (
 			<Alert variant="destructive">
 				<Icon icon={Warning} />
-				<AlertTitle>No script on {result.host}</AlertTitle>
+				<AlertTitle>Nenhum script em {result.host}</AlertTitle>
 				<AlertDescription>
-					The page answered in {result.responseMs} ms, but the tag was not in
-					the HTML. Check that it sits in the head, above anything that rewrites
-					the page.
+					A página respondeu em {result.responseMs} ms, mas a tag não está no
+					HTML. Insira a tag no cabeçalho, antes dos scripts que alteram a
+					página.
 					{result.containers.length > 0
-						? ` We also read Tag Manager container ${result.containers.join(" and ")}, and the tag is not in there either.`
+						? ` Também verificamos o contêiner ${result.containers.join(" e ")} do Tag Manager, mas a tag não está nele.`
 						: ""}
 				</AlertDescription>
 			</Alert>
@@ -182,13 +186,11 @@ function Outcome({ result, siteId }: { result: Result; siteId: string }) {
 		return (
 			<Alert variant="destructive">
 				<Icon icon={Warning} />
-				<AlertTitle>Tag Manager will drop the site ID</AlertTitle>
+				<AlertTitle>O Tag Manager remove o ID do site</AlertTitle>
 				<AlertDescription>
-					Container {result.container.id} carries the tag, but the site ID is
-					not in the script URL. Tag Manager keeps only the URL when it injects
-					a script, so a data-site attribute never reaches the page and the
-					tracker never starts. Copy the Tag Manager snippet above and replace
-					the tag's HTML.
+					Contêiner {result.container.id} contém a tag, mas falta o ID do site
+					na URL do script. Substitua o HTML da tag pelo trecho indicado para o
+					Tag Manager.
 					{result.pageView
 						? " A page view did arrive in the last five minutes, so something on this site is still recording."
 						: ""}
@@ -202,18 +204,19 @@ function Outcome({ result, siteId }: { result: Result; siteId: string }) {
 			<Icon icon={CheckmarkFilled} className="text-success" />
 			<AlertTitle>
 				{result.container
-					? `Script found in container ${result.container.id}`
-					: `Script found on ${result.host}`}
+					? `Script encontrado no contêiner ${result.container.id}`
+					: `Script encontrado em ${result.host}`}
 			</AlertTitle>
 			<AlertDescription>
-				It answered in {result.responseMs} ms. Site ID {siteId} matched, and
-				this domain is {result.allowed ? "on" : "not on"} the allow list.
+				Resposta em {result.responseMs} ms. O ID do site {siteId} corresponde, e
+				este domínio está {result.allowed ? "" : "fora de"} na lista de
+				permitidos.
 				{result.container
-					? " The tag is not in the HTML, so it only runs once Tag Manager fires it — a page view is the proof."
+					? "A tag depende do acionamento pelo Tag Manager. Uma visita registrada confirma o funcionamento."
 					: ""}
 				{result.pageView
 					? " A page view arrived in the last five minutes."
-					: " No page view has arrived yet — open the page in a browser to send one."}
+					: "Nenhuma visita recebida. Abra a página no navegador para registrar uma visita."}
 			</AlertDescription>
 		</Alert>
 	);

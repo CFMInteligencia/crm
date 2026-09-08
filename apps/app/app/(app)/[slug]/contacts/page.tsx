@@ -18,7 +18,7 @@ import { ContactsTable } from "./contacts-table";
 import { CreateContactSheet } from "./create-contact-sheet";
 
 export const metadata: Metadata = {
-	title: "Contacts",
+	title: "Contatos",
 };
 
 export default function ContactsPage({
@@ -28,8 +28,10 @@ export default function ContactsPage({
 		<PageShell className="min-h-0">
 			<PageShellHeader>
 				<PageShellHeading>
-					<PageShellTitle>Contacts</PageShellTitle>
-					<PageShellDescription>Everyone in the pipeline.</PageShellDescription>
+					<PageShellTitle>Contatos</PageShellTitle>
+					<PageShellDescription>
+						Todos os contatos do funil de vendas.
+					</PageShellDescription>
 				</PageShellHeading>
 				<PageShellActions>
 					<CreateContactSheet />

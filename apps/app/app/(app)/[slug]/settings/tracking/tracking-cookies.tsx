@@ -26,18 +26,18 @@ import { useTRPC } from "@/lib/trpc/client";
 const TOGGLES = [
 	{
 		flag: "cookieSubdomains",
-		label: "Limit cookies to subdomains",
-		hint: "Set the cookie on the exact host that served the page, never on the parent domain",
+		label: "Limitar cookies aos subdomínios",
+		hint: "Gravar o cookie apenas no domínio exato da página",
 	},
 	{
 		flag: "secureCookies",
-		label: "Use secure cookies only",
-		hint: "Send the cookie over HTTPS and drop it on plain HTTP",
+		label: "Usar apenas cookies seguros",
+		hint: "Enviar cookies apenas por HTTPS",
 	},
 	{
 		flag: "honourDnt",
-		label: "Honour Do Not Track",
-		hint: "Record nothing at all when the browser asks not to be tracked",
+		label: "Respeitar a opção Não rastrear",
+		hint: "Não registrar dados quando o navegador solicita que não haja rastreamento",
 	},
 ] as const;
 
@@ -59,7 +59,7 @@ export function TrackingCookies() {
 		trpc.tracking.setCookieLifetime.mutationOptions({
 			onSuccess: async () => {
 				await cache.tracking();
-				toast.success("Cookie lifetime saved.");
+				toast.success("Prazo do cookie salvo.");
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -75,7 +75,7 @@ export function TrackingCookies() {
 			<CardHeader>
 				<CardTitle>Cookies</CardTitle>
 				<CardDescription>
-					How a returning visitor is recognised.
+					Como identificar visitantes recorrentes.
 				</CardDescription>
 			</CardHeader>
 
@@ -107,7 +107,7 @@ export function TrackingCookies() {
 				))}
 
 				<Field>
-					<FieldLabel htmlFor={lifetimeId}>Cookie lifetime</FieldLabel>
+					<FieldLabel htmlFor={lifetimeId}>Validade do cookie</FieldLabel>
 					<Select
 						value={String(cookieDays)}
 						disabled={busy}
@@ -127,8 +127,8 @@ export function TrackingCookies() {
 						</SelectContent>
 					</Select>
 					<FieldDescription>
-						After this a returning visitor counts as somebody new. Shorten it if
-						your policy asks you to.
+						Após este prazo, o visitante conta como uma nova pessoa. Ajuste
+						conforme sua política de privacidade.
 					</FieldDescription>
 				</Field>
 			</CardContent>

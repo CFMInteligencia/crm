@@ -47,7 +47,7 @@ function AddButton(props: ComponentProps<typeof Button>) {
 	return (
 		<Button {...props}>
 			<Icon icon={Add} data-icon="inline-start" />
-			New deal
+			Novo negócio
 		</Button>
 	);
 }
@@ -93,7 +93,7 @@ function CreateDealForm({ companyId }: { companyId?: string }) {
 		trpc.deals.create.mutationOptions({
 			onSuccess: async (deal) => {
 				await cache.deal(deal.id);
-				toast.success(`${deal.name} added.`);
+				toast.success(`${deal.name}: cadastro concluído.`);
 				await setOpen(null);
 				setName("");
 				setAmount("");
@@ -115,9 +115,9 @@ function CreateDealForm({ companyId }: { companyId?: string }) {
 			</SheetTrigger>
 			<SheetContent side="right">
 				<SheetHeader>
-					<SheetTitle>New deal</SheetTitle>
+					<SheetTitle>Novo negócio</SheetTitle>
 					<SheetDescription>
-						Every deal belongs to a company and has someone's name against it.
+						Cada negócio pertence a uma empresa e tem um responsável.
 					</SheetDescription>
 				</SheetHeader>
 
@@ -142,7 +142,7 @@ function CreateDealForm({ companyId }: { companyId?: string }) {
 				>
 					<FieldGroup>
 						<Field>
-							<FieldLabel htmlFor={nameId}>Name</FieldLabel>
+							<FieldLabel htmlFor={nameId}>Nome</FieldLabel>
 							<Input
 								id={nameId}
 								value={name}
@@ -154,7 +154,7 @@ function CreateDealForm({ companyId }: { companyId?: string }) {
 						</Field>
 
 						<Field>
-							<FieldLabel htmlFor="create-deal-company">Company</FieldLabel>
+							<FieldLabel htmlFor="create-deal-company">Empresa</FieldLabel>
 							<CompanyPicker
 								id="create-deal-company"
 								value={company}
@@ -163,10 +163,10 @@ function CreateDealForm({ companyId }: { companyId?: string }) {
 						</Field>
 
 						<Field>
-							<FieldLabel htmlFor="create-deal-owner">Owner</FieldLabel>
+							<FieldLabel htmlFor="create-deal-owner">Responsável</FieldLabel>
 							<Select value={resolvedOwner} onValueChange={setOwnerId}>
 								<SelectTrigger id="create-deal-owner">
-									<SelectValue placeholder="Choose an owner" />
+									<SelectValue placeholder="Selecionar responsável" />
 								</SelectTrigger>
 								<SelectContent>
 									{(users.data ?? []).map((user) => (
@@ -179,7 +179,7 @@ function CreateDealForm({ companyId }: { companyId?: string }) {
 						</Field>
 
 						<Field>
-							<FieldLabel htmlFor="create-deal-stage">Stage</FieldLabel>
+							<FieldLabel htmlFor="create-deal-stage">Etapa</FieldLabel>
 							<Select value={stage} onValueChange={setStage}>
 								<SelectTrigger id="create-deal-stage">
 									<SelectValue />
@@ -193,13 +193,13 @@ function CreateDealForm({ companyId }: { companyId?: string }) {
 								</SelectContent>
 							</Select>
 							<FieldDescription>
-								A new deal is an open deal — close it from the pipeline once
-								there is an outcome to record.
+								O negócio começa em aberto. Encerre-o no funil quando houver um
+								resultado.
 							</FieldDescription>
 						</Field>
 
 						<Field>
-							<FieldLabel htmlFor={amountId}>Amount</FieldLabel>
+							<FieldLabel htmlFor={amountId}>Valor</FieldLabel>
 							<div className="flex gap-2">
 								<Input
 									id={amountId}
@@ -210,10 +210,7 @@ function CreateDealForm({ companyId }: { companyId?: string }) {
 									autoComplete="off"
 								/>
 								<Select value={resolvedCurrency} onValueChange={setCurrency}>
-									<SelectTrigger
-										aria-label="Currency"
-										className="w-28 shrink-0"
-									>
+									<SelectTrigger aria-label="Moeda" className="w-28 shrink-0">
 										<SelectValue />
 									</SelectTrigger>
 									<SelectContent>
@@ -228,12 +225,14 @@ function CreateDealForm({ companyId }: { companyId?: string }) {
 						</Field>
 
 						<Field>
-							<FieldLabel htmlFor={closeDateId}>Expected close date</FieldLabel>
+							<FieldLabel htmlFor={closeDateId}>
+								Data prevista de fechamento
+							</FieldLabel>
 							<DatePicker
 								id={closeDateId}
 								value={closeDate}
 								onChange={setCloseDate}
-								placeholder="No date yet"
+								placeholder="Sem data"
 							/>
 						</Field>
 					</FieldGroup>
@@ -246,10 +245,10 @@ function CreateDealForm({ companyId }: { companyId?: string }) {
 						disabled={create.isPending || !ready}
 					>
 						{create.isPending ? <Spinner /> : null}
-						Add deal
+						Adicionar negócio
 					</Button>
 					<SheetClose asChild>
-						<Button variant="outline">Cancel</Button>
+						<Button variant="outline">Cancelar</Button>
 					</SheetClose>
 				</SheetFooter>
 			</SheetContent>

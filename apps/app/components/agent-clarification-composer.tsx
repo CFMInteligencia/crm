@@ -40,7 +40,7 @@ export function AgentClarificationComposer({
 		options.length === 0;
 	const items = [
 		{
-			name: "response",
+			name: "resposta",
 			required: true,
 			choices: options.map((option) => ({
 				disabled: pending,
@@ -72,7 +72,7 @@ export function AgentClarificationComposer({
 			setTransportError(
 				error instanceof Error && error.message.trim()
 					? error.message
-					: "Unable to submit. Check your connection and try again.",
+					: "Não foi possível enviar. Verifique sua conexão e tente novamente.",
 			);
 		}
 	};
@@ -89,8 +89,8 @@ export function AgentClarificationComposer({
 				<QuestionnaireTitle>{question.prompt}</QuestionnaireTitle>
 				<QuestionnaireDescription>
 					{options.length > 0
-						? "Choose an answer, then submit."
-						: "Add the detail the agent needs to continue."}
+						? "Selecione uma resposta e envie."
+						: "Informe os detalhes necessários para o agente continuar."}
 				</QuestionnaireDescription>
 				<QuestionnaireChoices>
 					{options.map((option) => (
@@ -109,8 +109,10 @@ export function AgentClarificationComposer({
 					))}
 					{showFreeform ? (
 						<QuestionnaireInput
-							aria-label={options.length > 0 ? "Another answer" : "Your answer"}
-							placeholder="Add the detail the agent needs"
+							aria-label={
+								options.length > 0 ? "Outra resposta" : "Sua resposta"
+							}
+							placeholder="Informe os detalhes para o agente"
 							disabled={pending}
 						/>
 					) : null}
@@ -126,9 +128,9 @@ export function AgentClarificationComposer({
 				<QuestionnaireSubmit disabled={pending} aria-busy={pending} size="sm">
 					<AsyncButtonContent
 						status={pending ? "pending" : "idle"}
-						pendingLabel="Submitting"
+						pendingLabel="Enviando"
 					>
-						Submit answer
+						Enviar resposta
 					</AsyncButtonContent>
 				</QuestionnaireSubmit>
 			</QuestionnaireActions>

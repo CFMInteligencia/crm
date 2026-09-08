@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { ptBR } from "react-day-picker/locale"
 import {
   DayPicker,
   getDefaultClassNames,
@@ -19,7 +20,7 @@ function Calendar({
   showOutsideDays = true,
   captionLayout = "label",
   buttonVariant = "ghost",
-  locale,
+  locale = ptBR,
   formatters,
   components,
   ...props

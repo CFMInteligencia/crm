@@ -5,7 +5,7 @@ import { requireMailboxAccess } from "@/lib/session";
 import { OnboardingForm } from "./onboarding-form";
 
 export const metadata: Metadata = {
-	title: "Set up",
+	title: "Configuração inicial",
 };
 
 export const instant = false;
@@ -16,8 +16,8 @@ export default async function OnboardingPage() {
 	return (
 		<AuthShell>
 			<AuthHeading
-				title="Tell us about your company"
-				description="Two things, once. The name is what the CRM calls you; the website is how the agent learns what you sell."
+				title="Conte sobre sua empresa"
+				description="Informe o nome da empresa e o site para concluir o cadastro."
 			/>
 
 			<OnboardingForm placeholder={DEFAULT_WORKSPACE_NAME} />

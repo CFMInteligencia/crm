@@ -40,12 +40,12 @@ import { isSyncing, SYNC_POLL_MS } from "@/lib/sync-status";
 import { useCrmCache } from "@/lib/trpc/cache";
 import { useTRPC } from "@/lib/trpc/client";
 
-const AUTO_CREATE = "Add the company and contact when you reply to someone new";
+const AUTO_CREATE = "Adicionar empresa e contato ao responder a alguém novo";
 
 const CONNECT_ERRORS = new Map([
 	[
 		"email_doesn't_match",
-		"That Microsoft account has a different email address to the one you sign in with, so it cannot be attached to your account. Connect the Microsoft account that matches your sign-in address.",
+		"Conecte a conta Microsoft com o mesmo e-mail usado para entrar no CRM.",
 	],
 ]);
 
@@ -56,12 +56,12 @@ function MicrosoftUnavailable() {
 				<CardTitle>
 					<div className="flex items-center gap-2">
 						Microsoft
-						<StatusIndicator size="sm" tone="neutral" label="Not configured" />
+						<StatusIndicator size="sm" tone="neutral" label="Não configurado" />
 					</div>
 				</CardTitle>
 				<CardDescription>
-					Set MICROSOFT_CLIENT_ID and MICROSOFT_CLIENT_SECRET in the root .env
-					file and restart.
+					Configure MICROSOFT_CLIENT_ID e MICROSOFT_CLIENT_SECRET no arquivo
+					.env da raiz e reinicie.
 				</CardDescription>
 			</CardHeader>
 		</Card>
@@ -79,7 +79,7 @@ function ConnectMicrosoft({
 
 	function fail(message?: string) {
 		setPending(false);
-		toast.error(message ?? "Could not reach Microsoft.");
+		toast.error(message ?? "Não foi possível conectar à Microsoft.");
 	}
 
 	async function handleConnect() {
@@ -103,12 +103,12 @@ function ConnectMicrosoft({
 				<CardTitle>
 					<div className="flex items-center gap-2">
 						Microsoft
-						<StatusIndicator size="sm" tone="neutral" label="Not connected" />
+						<StatusIndicator size="sm" tone="neutral" label="Não conectado" />
 					</div>
 				</CardTitle>
 				<CardDescription>
-					Read-only Outlook mail. Only conversations with companies in the CRM
-					are stored.
+					Leitura de e-mails do Outlook. Apenas conversas com empresas do CRM
+					são armazenadas.
 				</CardDescription>
 
 				<CardAction>
@@ -125,7 +125,7 @@ function ConnectMicrosoft({
 						) : (
 							<MicrosoftLogo data-icon="inline-start" className="size-4" />
 						)}
-						Connect
+						Conectar
 					</Button>
 				</CardAction>
 			</CardHeader>
@@ -134,10 +134,10 @@ function ConnectMicrosoft({
 				<CardContent>
 					<Alert variant="destructive">
 						<Icon icon={Warning} />
-						<AlertTitle>Microsoft did not finish connecting</AlertTitle>
+						<AlertTitle>A conexão Microsoft não foi concluída</AlertTitle>
 						<AlertDescription>
 							{CONNECT_ERRORS.get(connectError) ??
-								"Microsoft returned an error before the connection was made. Try again."}
+								"A Microsoft retornou um erro. Tente conectar novamente."}
 						</AlertDescription>
 					</Alert>
 				</CardContent>
@@ -168,7 +168,7 @@ export function MicrosoftConnection({
 		trpc.microsoft.purgeSyncedData.mutationOptions({
 			onSuccess: async (result) => {
 				await cache.microsoft();
-				toast.success(`Removed ${result.purged} synced items.`);
+				toast.success(`${result.purged} itens sincronizados removidos.`);
 			},
 			onError: (error) => toast.error(error.message),
 		}),
@@ -228,12 +228,12 @@ export function MicrosoftConnection({
 						<StatusIndicator
 							size="sm"
 							tone={healthy ? "success" : "warning"}
-							label={healthy ? "Connected" : "Needs attention"}
+							label={healthy ? "Conectado" : "Precisa de atenção"}
 						/>
 					</div>
 				</CardTitle>
 				<CardDescription>
-					Email threads land on the matching company as they happen.
+					Conversas por e-mail são associadas à empresa correspondente.
 				</CardDescription>
 
 				<CardAction>
@@ -243,7 +243,7 @@ export function MicrosoftConnection({
 						disabled={syncNow.isPending}
 						onClick={() => syncNow.mutate()}
 					>
-						{syncNow.isPending ? "Checking…" : "Check now"}
+						{syncNow.isPending ? "Sincronizando…" : "Sincronizar agora"}
 					</Button>
 				</CardAction>
 			</CardHeader>
@@ -252,16 +252,18 @@ export function MicrosoftConnection({
 				{!hasRefreshToken ? (
 					<Alert variant="destructive">
 						<Icon icon={Warning} />
-						<AlertTitle>Microsoft did not return a refresh token</AlertTitle>
-						<AlertDescription>Sign out and back in.</AlertDescription>
+						<AlertTitle>
+							A Microsoft não forneceu o token de renovação
+						</AlertTitle>
+						<AlertDescription>Saia e entre novamente.</AlertDescription>
 					</Alert>
 				) : failing.length > 0 ? (
 					failing.map((source) => (
 						<Alert key={source.source} variant="destructive">
 							<Icon icon={Warning} />
-							<AlertTitle>Email sync failed</AlertTitle>
+							<AlertTitle>Falha na sincronização de e-mails</AlertTitle>
 							<AlertDescription>
-								{source.lastError ?? "Microsoft needs reconnecting."}
+								{source.lastError ?? "Reconecte sua conta Microsoft."}
 							</AlertDescription>
 						</Alert>
 					))
@@ -269,10 +271,10 @@ export function MicrosoftConnection({
 					<p className="text-muted-foreground text-xs">
 						{lastSyncedAt ? (
 							<>
-								Last checked <LocalRelativeTime date={lastSyncedAt} />
+								Última sincronização <LocalRelativeTime date={lastSyncedAt} />
 							</>
 						) : (
-							"Waiting for the first check"
+							"Aguardando a primeira sincronização"
 						)}
 					</p>
 				)}
@@ -286,7 +288,7 @@ export function MicrosoftConnection({
 							htmlFor={`auto-create-${source.source}`}
 							className="flex flex-col items-start gap-1"
 						>
-							<span className="text-sm">Email</span>
+							<span className="text-sm">E-mail</span>
 							<span className="font-normal text-muted-foreground text-xs">
 								{AUTO_CREATE}
 							</span>
@@ -308,27 +310,28 @@ export function MicrosoftConnection({
 						<AlertDialog>
 							<AlertDialogTrigger asChild>
 								<Button variant="ghost" size="xs" disabled={purge.isPending}>
-									Delete synced data
+									Excluir dados sincronizados
 								</Button>
 							</AlertDialogTrigger>
 
 							<AlertDialogContent>
 								<AlertDialogHeader>
-									<AlertDialogTitle>Delete synced data?</AlertDialogTitle>
+									<AlertDialogTitle>
+										Excluir os dados sincronizados?
+									</AlertDialogTitle>
 									<AlertDialogDescription>
-										Every email brought in from Outlook is removed from the CRM.
-										The next check starts from now, so nothing deleted here
-										comes back.
+										Os e-mails importados do Outlook serão excluídos do CRM. A
+										próxima sincronização busca apenas dados novos.
 									</AlertDialogDescription>
 								</AlertDialogHeader>
 
 								<AlertDialogFooter>
-									<AlertDialogCancel>Cancel</AlertDialogCancel>
+									<AlertDialogCancel>Cancelar</AlertDialogCancel>
 									<AlertDialogAction
 										variant="destructive"
 										onClick={() => purge.mutate()}
 									>
-										Delete
+										Excluir
 									</AlertDialogAction>
 								</AlertDialogFooter>
 							</AlertDialogContent>
@@ -337,29 +340,29 @@ export function MicrosoftConnection({
 						<AlertDialog>
 							<AlertDialogTrigger asChild>
 								<Button variant="ghost" size="xs" disabled={revoke.isPending}>
-									Disconnect Microsoft
+									Desconectar Microsoft
 								</Button>
 							</AlertDialogTrigger>
 
 							<AlertDialogContent>
 								<AlertDialogHeader>
-									<AlertDialogTitle>Disconnect Microsoft?</AlertDialogTitle>
+									<AlertDialogTitle>Desconectar a Microsoft?</AlertDialogTitle>
 									<AlertDialogDescription>
 										{required
-											? "You will be signed out, and you cannot use the CRM again until you grant access."
-											: "New email stops arriving. Everything already synced stays, and you can connect Microsoft again from this page."}{" "}
-										Microsoft has no way for us to withdraw the consent itself —
-										remove this app from your Microsoft account to do that.
+											? "Sua sessão será encerrada. Autorize o acesso novamente para usar o CRM."
+											: "Novos e-mails deixam de ser importados. Os dados existentes permanecem. Você pode reconectar a Microsoft nesta página."}{" "}
+										Para revogar a autorização, remova este aplicativo na sua
+										conta Microsoft.
 									</AlertDialogDescription>
 								</AlertDialogHeader>
 
 								<AlertDialogFooter>
-									<AlertDialogCancel>Cancel</AlertDialogCancel>
+									<AlertDialogCancel>Cancelar</AlertDialogCancel>
 									<AlertDialogAction
 										variant="destructive"
 										onClick={() => revoke.mutate()}
 									>
-										Disconnect
+										Desconectar
 									</AlertDialogAction>
 								</AlertDialogFooter>
 							</AlertDialogContent>
@@ -371,7 +374,7 @@ export function MicrosoftConnection({
 								target="_blank"
 								rel="noreferrer"
 							>
-								Manage in your Microsoft account
+								Gerenciar na conta Microsoft
 							</Link>
 						</Button>
 					</div>

@@ -38,7 +38,7 @@ import { useCrmCache } from "@/lib/trpc/cache";
 import { useTRPC } from "@/lib/trpc/client";
 
 function deals(count: number): string {
-	return formatCount(count, "deal");
+	return formatCount(count, "negócio");
 }
 
 export function DealsBulkActions({
@@ -64,7 +64,10 @@ export function DealsBulkActions({
 		trpc.deals.bulkAssignOwner.mutationOptions({
 			onSuccess: async (result) => {
 				await cache.deal();
-				reportBulk(result, (count) => `${deals(count)} reassigned.`);
+				reportBulk(
+					result,
+					(count) => `Responsável atualizado: ${deals(count)}.`,
+				);
 				onDone();
 			},
 			onError,
@@ -75,7 +78,7 @@ export function DealsBulkActions({
 		trpc.deals.bulkSetStage.mutationOptions({
 			onSuccess: async (result) => {
 				await cache.deal();
-				reportBulk(result, (count) => `${deals(count)} moved.`);
+				reportBulk(result, (count) => `Etapa atualizada: ${deals(count)}.`);
 				setClosing(null);
 				setReason("");
 				onDone();
@@ -88,7 +91,10 @@ export function DealsBulkActions({
 		trpc.deals.bulkArchive.mutationOptions({
 			onSuccess: async (result, variables) => {
 				await cache.removedMany({ kind: "deal", ids: variables.ids });
-				reportBulk(result, (count) => `${deals(count)} archived.`);
+				reportBulk(
+					result,
+					(count) => `Arquivamento concluído: ${deals(count)}.`,
+				);
 				onDone();
 			},
 			onError,
@@ -99,7 +105,10 @@ export function DealsBulkActions({
 		trpc.deals.bulkRestore.mutationOptions({
 			onSuccess: async (result) => {
 				await cache.deal();
-				reportBulk(result, (count) => `${deals(count)} restored.`);
+				reportBulk(
+					result,
+					(count) => `Restauração concluída: ${deals(count)}.`,
+				);
 				onDone();
 			},
 			onError,
@@ -110,7 +119,10 @@ export function DealsBulkActions({
 		trpc.deals.bulkPurge.mutationOptions({
 			onSuccess: async (result, variables) => {
 				await cache.removedMany({ kind: "deal", ids: variables.ids });
-				reportBulk(result, (count) => `${deals(count)} deleted forever.`);
+				reportBulk(
+					result,
+					(count) => `Exclusão permanente concluída: ${deals(count)}.`,
+				);
 				setConfirming(false);
 				onDone();
 			},
@@ -127,7 +139,7 @@ export function DealsBulkActions({
 					<DropdownMenuGroup>
 						<DropdownMenuItem onSelect={() => restore.mutate({ ids })}>
 							<Undo />
-							Restore
+							Restaurar
 						</DropdownMenuItem>
 					</DropdownMenuGroup>
 					<DropdownMenuSeparator />
@@ -136,7 +148,7 @@ export function DealsBulkActions({
 							variant="destructive"
 							onSelect={() => setConfirming(true)}
 						>
-							Delete forever
+							Excluir permanentemente
 						</DropdownMenuItem>
 					</DropdownMenuGroup>
 				</BulkActionsMenu>
@@ -144,8 +156,8 @@ export function DealsBulkActions({
 				<BulkDeleteDialog
 					open={confirming}
 					onOpenChange={setConfirming}
-					title={`Delete ${deals(ids.length)} forever?`}
-					description="Everything filed against them — activity, notes, the amounts in your pipeline — goes too. This cannot be undone."
+					title={`Excluir ${deals(ids.length)} permanentemente?`}
+					description="As atividades, notas e valores associados também serão excluídos. Esta ação não pode ser desfeita."
 					onConfirm={() => purge.mutate({ ids })}
 				/>
 			</>
@@ -165,7 +177,7 @@ export function DealsBulkActions({
 					}
 				/>
 				<DropdownMenuSub>
-					<DropdownMenuSubTrigger>Change stage</DropdownMenuSubTrigger>
+					<DropdownMenuSubTrigger>Alterar etapa</DropdownMenuSubTrigger>
 					<DropdownMenuSubContent className="max-h-72 overflow-y-auto">
 						<DropdownMenuGroup>
 							{DEAL_STAGE_OPTIONS.map((option) => (
@@ -189,7 +201,7 @@ export function DealsBulkActions({
 				<DropdownMenuGroup>
 					<DropdownMenuItem onSelect={() => archive.mutate({ ids })}>
 						<Archive />
-						Archive
+						Arquivar
 					</DropdownMenuItem>
 				</DropdownMenuGroup>
 			</BulkActionsMenu>
@@ -206,12 +218,11 @@ export function DealsBulkActions({
 					<DialogHeader>
 						<DialogTitle>
 							{closing === "CLOSED_LOST"
-								? `Close ${deals(ids.length)} as lost`
-								: `Mark ${deals(ids.length)} as unqualified`}
+								? `Encerrar ${deals(ids.length)} como perdidos`
+								: `Marcar ${deals(ids.length)} como não qualificados`}
 						</DialogTitle>
 						<DialogDescription>
-							The same reason goes on every one of them, so keep it to what they
-							have in common.
+							O mesmo motivo será aplicado a todos os negócios selecionados.
 						</DialogDescription>
 					</DialogHeader>
 
@@ -225,12 +236,12 @@ export function DealsBulkActions({
 						}}
 					>
 						<Field>
-							<FieldLabel htmlFor={reasonId}>Reason</FieldLabel>
+							<FieldLabel htmlFor={reasonId}>Motivo</FieldLabel>
 							<Textarea
 								id={reasonId}
 								value={reason}
 								onChange={(event) => setReason(event.target.value)}
-								placeholder="Budget pulled for the quarter"
+								placeholder="Orçamento do trimestre cancelado"
 								rows={3}
 							/>
 						</Field>
@@ -243,7 +254,7 @@ export function DealsBulkActions({
 							disabled={setStage.isPending || reason.trim() === ""}
 						>
 							{setStage.isPending ? <Spinner /> : null}
-							Save
+							Salvar
 						</Button>
 						<Button
 							variant="outline"
@@ -252,7 +263,7 @@ export function DealsBulkActions({
 								setReason("");
 							}}
 						>
-							Cancel
+							Cancelar
 						</Button>
 					</DialogFooter>
 				</DialogContent>

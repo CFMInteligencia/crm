@@ -21,10 +21,10 @@ const fontMono = Geist_Mono({
 
 export const metadata: Metadata = {
 	title: {
-		default: "Comp AI - CRM",
-		template: "%s · Comp AI CRM",
+		default: "CFM CRM",
+		template: "%s · CFM CRM",
 	},
-	description: "Customer Relationship Management for Comp AI",
+	description: "Gestão de relacionamento com clientes",
 	icons: {
 		icon: [
 			{ url: "/favicon.svg", type: "image/svg+xml" },
@@ -42,7 +42,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html
-			lang="en"
+			lang="pt-BR"
 			suppressHydrationWarning
 			className={cn(fontSans.variable, fontMono.variable, "h-full antialiased")}
 		>

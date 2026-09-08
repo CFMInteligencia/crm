@@ -147,8 +147,8 @@ export function AgentCode({
 		return (
 			<p className="text-muted-foreground text-sm">
 				{code.isPending
-					? "Reading the agent's files…"
-					: "This agent has no files yet. The builder writes them when it deploys."}
+					? "Lendo arquivos do agente…"
+					: "Este agente ainda não tem arquivos. Eles são criados durante a publicação."}
 			</p>
 		);
 	}
@@ -158,9 +158,9 @@ export function AgentCode({
 			<section className="flex flex-col gap-3.5">
 				<div className="flex items-end justify-between gap-4">
 					<div>
-						<h2 className="font-semibold text-lg tracking-tight">Code</h2>
+						<h2 className="font-semibold text-lg tracking-tight">Código</h2>
 						<p className="text-muted-foreground text-sm">
-							What the agent actually runs.
+							Código executado pelo agente.
 						</p>
 					</div>
 
@@ -171,7 +171,7 @@ export function AgentCode({
 								size="sm"
 								variant="outline"
 							>
-								{showDiff ? "Hide changes" : "Changes"}
+								{showDiff ? "Ocultar alterações" : "Alterações"}
 							</Button>
 						) : null}
 						{canManage ? (
@@ -183,7 +183,7 @@ export function AgentCode({
 								size="sm"
 								variant="outline"
 							>
-								{editing ? "Done" : "Edit"}
+								{editing ? "Concluído" : "Editar"}
 							</Button>
 						) : null}
 					</div>
@@ -228,12 +228,12 @@ export function AgentCode({
 			</section>
 
 			<SaveBar
-				description={`${changed.length} file${changed.length === 1 ? "" : "s"} changed. Saving writes a new revision.`}
+				description={`Arquivos alterados: ${changed.length}. Salvar cria uma nova revisão.`}
 				open={changed.length > 0}
-				title="Unsaved code"
+				title="Código não salvo"
 			>
 				<Button disabled={saving} onClick={discard} size="sm" variant="outline">
-					Discard
+					Descartar
 				</Button>
 				<Button
 					disabled={saving}
@@ -242,7 +242,7 @@ export function AgentCode({
 					}}
 					size="sm"
 				>
-					{saving ? "Saving…" : "Save"}
+					{saving ? "Salvando…" : "Salvar"}
 				</Button>
 			</SaveBar>
 		</EditProvider>

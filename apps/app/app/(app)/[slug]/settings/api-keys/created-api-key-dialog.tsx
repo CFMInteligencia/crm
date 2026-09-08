@@ -30,9 +30,9 @@ export function CreatedApiKeyDialog({
 		<Dialog open={apiKey !== null} onOpenChange={onOpenChange}>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>{apiKey?.name ?? "API key"} created</DialogTitle>
+					<DialogTitle>{apiKey?.name ?? "API key"} criada</DialogTitle>
 					<DialogDescription>
-						Copy it now. Nobody, including us, can show it to you again.
+						Copie a chave agora. Ela não será exibida novamente.
 					</DialogDescription>
 				</DialogHeader>
 
@@ -43,12 +43,12 @@ export function CreatedApiKeyDialog({
 						className="font-mono"
 					/>
 					<InputGroupAddon align="inline-end">
-						<CopyValue value={apiKey?.key ?? ""} label="API key" />
+						<CopyValue value={apiKey?.key ?? ""} label="Chave de API" />
 					</InputGroupAddon>
 				</InputGroup>
 
 				<DialogFooter>
-					<Button onClick={() => onOpenChange(false)}>Done</Button>
+					<Button onClick={() => onOpenChange(false)}>Concluído</Button>
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>

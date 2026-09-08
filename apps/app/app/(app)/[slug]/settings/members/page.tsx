@@ -16,7 +16,7 @@ import { membersSearchParams } from "./members-search-params";
 import { MembersTable } from "./members-table";
 
 export const metadata: Metadata = {
-	title: "Members",
+	title: "Integrantes",
 };
 
 export default function MembersSettingsPage({
@@ -26,9 +26,9 @@ export default function MembersSettingsPage({
 		<PageShell className="min-h-0">
 			<PageShellHeader>
 				<PageShellHeading>
-					<PageShellTitle>Members</PageShellTitle>
+					<PageShellTitle>Integrantes</PageShellTitle>
 					<PageShellDescription>
-						Everyone who has access to your CRM.
+						Pessoas com acesso ao CRM.
 					</PageShellDescription>
 				</PageShellHeading>
 			</PageShellHeader>

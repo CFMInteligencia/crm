@@ -36,22 +36,22 @@ const ENRICHMENT_ROWS = [
 ];
 
 const SUGGESTED_AGENTS = [
-	"Brief every deal owner before a renewal call",
-	"Flag deals with no activity for 14 days",
-	"Hand new customers from Sales to Onboarding",
+	"Preparar responsáveis antes de reuniões de renovação",
+	"Sinalizar negócios sem atividade há 14 dias",
+	"Encaminhar novos clientes de Vendas para Implantação",
 ];
 
 const FOLLOW_UPS = [
-	{ label: "Recheck Paula Marchetti", due: "14d", next: true },
-	{ label: "Brief owner before renewal", due: "2d", next: false },
-	{ label: "Re-enrich Northwind", due: "90d", next: false },
+	{ label: "Revisar Paula Marchetti", due: "14d", next: true },
+	{ label: "Preparar responsável antes da renovação", due: "2d", next: false },
+	{ label: "Atualizar dados da Northwind", due: "90d", next: false },
 ];
 
 export function CapabilitiesSection() {
 	return (
 		<section className="relative flex w-full shrink-0 flex-col items-center px-6 pt-20 pb-20 md:pb-30">
 			<div className="flex w-full max-w-6xl flex-col gap-12 md:gap-[72px]">
-				<SectionHeading title="What it actually does" />
+				<SectionHeading title="O que o CRM faz" />
 
 				<div className="flex flex-col gap-4 lg:flex-row">
 					<div className="flex min-w-0 grow flex-col gap-4">
@@ -75,7 +75,7 @@ function EnrichmentCard() {
 	return (
 		<BentoCard className="gap-6">
 			<CardHeading
-				title="Records fill themselves in"
+				title="Preenchimento automático de registros"
 				body="A new person on a thread becomes a contact, and their company arrives with its logo, industry and last activity already on it."
 			/>
 
@@ -97,11 +97,11 @@ function EnrichmentCard() {
 						{row.researching ? (
 							<StatusBadge className="gap-1 bg-border text-muted-foreground">
 								<ResearchingSpinner />
-								Researching
+								Pesquisando
 							</StatusBadge>
 						) : (
 							<StatusBadge className="bg-primary text-primary-foreground">
-								Enriched
+								Dados enriquecidos
 							</StatusBadge>
 						)}
 					</div>
@@ -114,14 +114,14 @@ function EnrichmentCard() {
 function AgentBuilderCard() {
 	return (
 		<BentoCard className="min-w-0 grow gap-5">
-			<CardTitle>Agents that build agents</CardTitle>
+			<CardTitle>Agentes que criam agentes</CardTitle>
 			<CardBody>
-				Describe a process in a sentence and the agent writes another agent to
-				run it — on its own queue, on its own schedule.
+				Descreva um processo para criar um agente com fila e agendamento
+				próprios.
 			</CardBody>
 
 			<div className="flex select-none flex-col">
-				<MonoLabel className="h-[26px] shrink-0">SUGGESTED AGENTS</MonoLabel>
+				<MonoLabel className="h-[26px] shrink-0">AGENTES SUGERIDOS</MonoLabel>
 				{SUGGESTED_AGENTS.map((agent) => (
 					<div
 						key={agent}
@@ -141,7 +141,7 @@ function AgentBuilderCard() {
 function FollowUpCard() {
 	return (
 		<BentoCard className="min-w-0 grow gap-5">
-			<CardTitle>It books its own follow-ups</CardTitle>
+			<CardTitle>Agendamento de acompanhamentos</CardTitle>
 
 			<ul className="flex select-none flex-col gap-[14px]">
 				{FOLLOW_UPS.map((item) => (
@@ -168,10 +168,9 @@ function FollowUpCard() {
 			</ul>
 
 			<div className="flex flex-col gap-2 pt-1">
-				<MonoLabel>WHY</MonoLabel>
+				<MonoLabel>MOTIVO</MonoLabel>
 				<p className="text-[13px]/[21px] text-muted-foreground">
-					An agent that cannot say why it will be back in fourteen days does not
-					have a reason, it has a default.
+					Cada acompanhamento precisa de um motivo, além de uma data.
 				</p>
 			</div>
 		</BentoCard>

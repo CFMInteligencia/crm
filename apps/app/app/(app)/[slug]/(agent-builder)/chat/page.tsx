@@ -6,7 +6,7 @@ import { requireSession } from "@/lib/session";
 import { HydrateClient } from "@/lib/trpc/hydrate";
 import { getServerQueryClient, getServerTrpc } from "@/lib/trpc/server";
 
-export const metadata: Metadata = { title: "Chat" };
+export const metadata: Metadata = { title: "Conversa" };
 
 export default function ChatPage() {
 	return (

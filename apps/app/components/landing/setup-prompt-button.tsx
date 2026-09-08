@@ -8,7 +8,7 @@ import { useState } from "react";
 import { type CtaLocation, captureLanding } from "./analytics";
 
 const SETUP_PROMPT =
-	"Set up trycompai/crm — install the dependencies, start Postgres, create my .env, and tell me which keys I still need.";
+	"Configure trycompai/crm: instale as dependências, inicie o Postgres, crie o .env e informe as chaves necessárias.";
 
 /**
  * The page's leading action: hand the whole setup to a coding agent. It stands
@@ -30,10 +30,12 @@ export function SetupPromptButton({ location }: { location: CtaLocation }) {
 			variant="outline"
 			size="xl"
 			onClick={copy}
-			aria-label="Copy the setup prompt"
+			aria-label="Copiar instruções de instalação"
 		>
 			<ClaudeLogo data-icon="inline-start" className="size-4" />
-			{copied ? "Copied to clipboard" : "Copy the setup prompt"}
+			{copied
+				? "Copiado para a área de transferência"
+				: "Copiar instruções de instalação"}
 			{copied ? (
 				<Checkmark
 					data-icon="inline-end"

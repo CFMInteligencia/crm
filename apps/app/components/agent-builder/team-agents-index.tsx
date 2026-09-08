@@ -44,14 +44,14 @@ export function TeamAgentsIndex({ initialAgents }: { initialAgents: Agents }) {
 									</span>
 								</span>
 								<span className="mt-1 block wrap-break-word text-muted-foreground text-xs sm:mt-0 sm:truncate">
-									{agent.description ?? "No description"}
+									{agent.description ?? "Sem descrição"}
 								</span>
 								<span className="mt-2 block font-mono text-muted-foreground text-xs sm:hidden">
-									{agent.runCount} runs
+									{agent.runCount} execuções
 								</span>
 							</span>
 							<span className="hidden shrink-0 font-mono text-muted-foreground text-xs sm:inline">
-								{agent.runCount} runs
+								{agent.runCount} execuções
 							</span>
 							<Icon
 								icon={ArrowRight}
@@ -63,16 +63,16 @@ export function TeamAgentsIndex({ initialAgents }: { initialAgents: Agents }) {
 			) : (
 				<div className="flex min-h-64 flex-col items-center justify-center rounded-lg border border-dashed px-6 text-center">
 					<Icon icon={Bot} className="size-6 text-muted-foreground" />
-					<h2 className="mt-4 font-medium text-sm">No team agents yet</h2>
+					<h2 className="mt-4 font-medium text-sm">Nenhum agente da equipe</h2>
 					<p className="mt-1 text-muted-foreground text-xs">
-						Create one from a private chat, then review its access before
-						deploying it.
+						Crie um agente em uma conversa privada e revise as permissões antes
+						de publicar.
 					</p>
 					<Link
 						href={workspaceUrl("/chat")}
 						className="mt-4 text-primary text-xs hover:underline"
 					>
-						Open chat
+						Abrir conversa
 					</Link>
 				</div>
 			)}

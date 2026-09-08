@@ -38,8 +38,8 @@ export function SlackScopeGroups({
 			<div>
 				<h2 className="font-medium text-sm">{title}</h2>
 				<p className="text-muted-foreground text-xs">
-					Broad means the whole workspace, not one channel. Open a group to see
-					the details.
+					Permissões amplas abrangem todo o espaço de trabalho. Abra um grupo
+					para ver detalhes.
 				</p>
 			</div>
 
@@ -57,7 +57,7 @@ export function SlackScopeGroups({
 									</span>
 								</span>
 								<span className="shrink-0 whitespace-nowrap pt-0.5 pr-2 font-normal text-muted-foreground text-xs">
-									{broad} broad of {group.scopes.length}
+									{broad} amplas de {group.scopes.length}
 								</span>
 							</AccordionTrigger>
 
@@ -94,11 +94,11 @@ export function SlackScopeGroups({
 								{entry.grant}
 							</span>
 							<span className="text-muted-foreground text-xs">
-								Slack held this one back, so it is off.
+								O Slack não concedeu esta permissão. Ela permanece desativada.
 							</span>
 						</span>
 						<span className="shrink-0 whitespace-nowrap pt-0.5 pr-2 text-muted-foreground text-xs">
-							Not granted
+							Não autorizado
 						</span>
 					</div>
 				))}

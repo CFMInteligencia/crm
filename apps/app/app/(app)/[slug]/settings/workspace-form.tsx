@@ -52,7 +52,7 @@ export function WorkspaceForm() {
 			onSuccess: async (saved) => {
 				await cache.workspace();
 				setDraft(null);
-				toast.success("Workspace saved.");
+				toast.success("Dados da empresa salvos.");
 
 				if (saved.slug !== slug) {
 					router.replace(workspaceUrl(saved.slug, "/settings"));
@@ -75,10 +75,8 @@ export function WorkspaceForm() {
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>Workspace</CardTitle>
-				<CardDescription>
-					The name and website of the company using this CRM.
-				</CardDescription>
+				<CardTitle>Espaço de trabalho</CardTitle>
+				<CardDescription>Nome e site da empresa que usa o CRM.</CardDescription>
 
 				<CardAction>
 					<Button
@@ -93,7 +91,7 @@ export function WorkspaceForm() {
 						}
 					>
 						{save.isPending ? <Spinner data-icon="inline-start" /> : null}
-						Save
+						Salvar
 					</Button>
 				</CardAction>
 			</CardHeader>
@@ -111,23 +109,23 @@ export function WorkspaceForm() {
 				>
 					<FieldGroup>
 						<Field>
-							<FieldLabel htmlFor={nameId}>Name</FieldLabel>
+							<FieldLabel htmlFor={nameId}>Nome</FieldLabel>
 							<Input
 								id={nameId}
 								value={values.name}
 								onChange={(event) => edit({ name: event.target.value })}
-								placeholder="Acme Inc."
+								placeholder="Empresa Exemplo"
 								autoComplete="organization"
 								disabled={!canRename || save.isPending}
 								required
 							/>
 							<FieldDescription>
-								Shown wherever the CRM refers to your own company.
+								Nome exibido para sua empresa no CRM.
 							</FieldDescription>
 						</Field>
 
 						<Field>
-							<FieldLabel htmlFor={websiteId}>Website</FieldLabel>
+							<FieldLabel htmlFor={websiteId}>Site</FieldLabel>
 							<InputGroup>
 								<InputGroupAddon>
 									<InputGroupText>https://</InputGroupText>
@@ -145,14 +143,15 @@ export function WorkspaceForm() {
 									disabled={!canRename || save.isPending}
 								/>
 							</InputGroup>
-							<FieldDescription>Your own company's website.</FieldDescription>
+							<FieldDescription>Site da sua empresa.</FieldDescription>
 						</Field>
 					</FieldGroup>
 				</form>
 
 				{canRename ? null : (
 					<p className="text-muted-foreground text-xs">
-						Only an owner or an admin can change this.
+						Somente o proprietário ou um administrador pode alterar esta
+						configuração.
 					</p>
 				)}
 			</CardContent>

@@ -49,8 +49,8 @@ export function SlackPeopleMatches({
 		<div className="flex flex-col gap-4 px-(--spacing-block-inline)">
 			<div className="flex items-center justify-center gap-3">
 				<p className="font-medium text-xs">
-					{rows.filter((row) => row.match?.slackUserId).length} of {rows.length}{" "}
-					matched
+					{rows.filter((row) => row.match?.slackUserId).length} de {rows.length}{" "}
+					associados
 				</p>
 				<Button
 					variant="outline"
@@ -59,19 +59,19 @@ export function SlackPeopleMatches({
 					onClick={() => refresh.mutate()}
 				>
 					{refreshing ? <Spinner data-icon="inline-start" /> : null}
-					{refreshing ? "Refreshing…" : "Refresh from Slack"}
+					{refreshing ? "Refreshing…" : "Atualizar dados do Slack"}
 				</Button>
 			</div>
 			{matches.data.sync === "stalled" ? (
 				<p className="text-center text-warning text-xs">
-					Comp AI is not reading Slack right now. These matches can be out of
-					date.
+					O Slack não está sendo consultado. As associações podem estar
+					desatualizadas.
 				</p>
 			) : null}
 			<div className="flex flex-col divide-y border-y">
 				{rows.length === 0 ? (
 					<p className="py-5 text-center text-muted-foreground text-sm">
-						No CRM teammates are available to match.
+						Nenhum integrante disponível para associação.
 					</p>
 				) : null}
 				{rows.map((row) => (
@@ -92,7 +92,7 @@ export function SlackPeopleMatches({
 								</div>
 							) : (
 								<p className="px-2.5 py-2 text-muted-foreground text-xs">
-									No exact email match
+									Nenhum e-mail correspondente
 								</p>
 							)}
 						</div>
@@ -100,13 +100,12 @@ export function SlackPeopleMatches({
 				))}
 			</div>
 			<p className="text-muted-foreground text-xs leading-relaxed">
-				Refresh after a Slack email changes. The CRM matches exact email
-				addresses only. Someone with no exact match stays unmatched, and an
-				agent stops instead of guessing at a similar name.
+				Atualize após mudar um e-mail no Slack. O CRM associa apenas e-mails
+				idênticos. Sem correspondência, o agente interrompe a ação.
 			</p>
 			<div className="flex justify-end">
 				<Button asChild>
-					<Link href={`/${slug}/settings/connections/slack`}>Continue</Link>
+					<Link href={`/${slug}/settings/connections/slack`}>Continuar</Link>
 				</Button>
 			</div>
 		</div>

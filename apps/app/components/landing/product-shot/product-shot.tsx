@@ -10,11 +10,11 @@ import { CompaniesList, CompaniesPage } from "./companies-page";
 import { CompanyDrawer, CompanySheet } from "./company-sheet";
 
 const RAIL = [
-	{ icon: Dashboard, label: "Overview", active: false },
-	{ icon: Building, label: "Companies", active: true },
-	{ icon: Group, label: "Contacts", active: false },
-	{ icon: Partnership, label: "Deals", active: false },
-	{ icon: Settings, label: "Settings", active: false },
+	{ icon: Dashboard, label: "Visão geral", active: false },
+	{ icon: Building, label: "Empresas", active: true },
+	{ icon: Group, label: "Contatos", active: false },
+	{ icon: Partnership, label: "Negócios", active: false },
+	{ icon: Settings, label: "Configurações", active: false },
 ];
 
 export function ProductShot() {
@@ -22,7 +22,7 @@ export function ProductShot() {
 		<section className="relative flex w-full shrink-0 flex-col items-center px-6 pt-20">
 			<div
 				role="img"
-				aria-label="The companies list with an account open on its Agent tab"
+				aria-label="Lista de empresas com uma ficha aberta na aba Agente"
 				className="w-[1183px] max-w-full select-none overflow-clip rounded-xl border border-border bg-background"
 			>
 				<div className="relative hidden h-[690px] w-[1182px] shrink-0 flex-col overflow-clip lg:flex">

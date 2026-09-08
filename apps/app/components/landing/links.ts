@@ -3,8 +3,8 @@ export const REPO_STARS = "4.4k";
 
 export const REPO_LINKS = [
 	{ label: "GitHub", href: REPO_URL },
-	{ label: "Issues", href: `${REPO_URL}/issues` },
-	{ label: "Pull requests", href: `${REPO_URL}/pulls` },
-	{ label: "Contributing", href: `${REPO_URL}/blob/main/CONTRIBUTING.md` },
-	{ label: "License", href: `${REPO_URL}/blob/main/LICENSE` },
+	{ label: "Problemas", href: `${REPO_URL}/issues` },
+	{ label: "Propostas de alteração", href: `${REPO_URL}/pulls` },
+	{ label: "Como contribuir", href: `${REPO_URL}/blob/main/CONTRIBUTING.md` },
+	{ label: "Licença", href: `${REPO_URL}/blob/main/LICENSE` },
 ] as const;

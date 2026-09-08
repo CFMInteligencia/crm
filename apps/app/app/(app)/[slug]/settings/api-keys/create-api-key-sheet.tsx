@@ -41,10 +41,10 @@ import { CreatedApiKeyDialog } from "./created-api-key-dialog";
 const FORM = "create-api-key";
 
 const EXPIRATION_OPTIONS = [
-	{ value: "30", label: "30 days" },
-	{ value: "90", label: "90 days" },
-	{ value: "365", label: "1 year" },
-	{ value: "never", label: "No expiration" },
+	{ value: "30", label: "30 dias" },
+	{ value: "90", label: "90 dias" },
+	{ value: "365", label: "1 ano" },
+	{ value: "never", label: "Sem expiração" },
 ] as const;
 
 type ExpirationValue = (typeof EXPIRATION_OPTIONS)[number]["value"];
@@ -55,7 +55,7 @@ function NewApiKeyButton(props: ComponentProps<typeof Button>) {
 	return (
 		<Button {...props}>
 			<Icon icon={Add} data-icon="inline-start" />
-			New API key
+			Nova chave de API
 		</Button>
 	);
 }
@@ -105,10 +105,9 @@ function CreateApiKeyForm() {
 
 				<SheetContent side="right">
 					<SheetHeader>
-						<SheetTitle>New API key</SheetTitle>
+						<SheetTitle>Nova chave de API</SheetTitle>
 						<SheetDescription>
-							Acts as you. Anything it can read or change is exactly what you
-							can.
+							A chave usa suas permissões de leitura e alteração.
 						</SheetDescription>
 					</SheetHeader>
 
@@ -126,12 +125,12 @@ function CreateApiKeyForm() {
 					>
 						<FieldGroup>
 							<Field>
-								<FieldLabel htmlFor={nameId}>Name</FieldLabel>
+								<FieldLabel htmlFor={nameId}>Nome</FieldLabel>
 								<Input
 									id={nameId}
 									value={name}
 									onChange={(event) => setName(event.target.value)}
-									placeholder="CI pipeline"
+									placeholder="Integração contínua"
 									maxLength={64}
 									autoComplete="off"
 									autoCapitalize="off"
@@ -140,12 +139,13 @@ function CreateApiKeyForm() {
 									required
 								/>
 								<FieldDescription>
-									Something you will recognise later, like where it runs.
+									Use um nome fácil de reconhecer, como o serviço que usa a
+									chave.
 								</FieldDescription>
 							</Field>
 
 							<Field>
-								<FieldLabel htmlFor={expirationId}>Expires</FieldLabel>
+								<FieldLabel htmlFor={expirationId}>Expira em</FieldLabel>
 								<Select
 									value={expiration}
 									onValueChange={(value) =>
@@ -174,10 +174,10 @@ function CreateApiKeyForm() {
 							disabled={!name.trim() || create.isPending}
 						>
 							{create.isPending ? <Spinner /> : null}
-							Create key
+							Criar chave
 						</Button>
 						<SheetClose asChild>
-							<Button variant="outline">Cancel</Button>
+							<Button variant="outline">Cancelar</Button>
 						</SheetClose>
 					</SheetFooter>
 				</SheetContent>

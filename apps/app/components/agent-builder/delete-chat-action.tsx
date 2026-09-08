@@ -57,7 +57,7 @@ export function DeleteChatAction({
 			onSuccess: async () => {
 				await cache.conversationRemoved(conversationId);
 				setConfirming(false);
-				toast.success("Chat deleted.");
+				toast.success("Conversa excluída.");
 				onDeleted?.();
 
 				if (returnToChatList) {
@@ -79,7 +79,7 @@ export function DeleteChatAction({
 					size="icon-xs"
 					className={className}
 					disabled={removeAction.pending}
-					aria-label={`Delete ${title}`}
+					aria-label={`Excluir ${title}`}
 					onClick={() => setConfirming(true)}
 				>
 					<Icon icon={Close} />
@@ -93,7 +93,7 @@ export function DeleteChatAction({
 							disabled={removeAction.pending}
 						>
 							<Icon icon={OverflowMenuVertical} />
-							<span className="sr-only">More chat actions</span>
+							<span className="sr-only">Mais ações da conversa</span>
 						</Button>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align="end">
@@ -102,7 +102,7 @@ export function DeleteChatAction({
 							onSelect={() => setConfirming(true)}
 						>
 							<Icon icon={TrashCan} />
-							Delete chat
+							Excluir conversa
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
@@ -116,15 +116,15 @@ export function DeleteChatAction({
 			>
 				<AlertDialogContent>
 					<AlertDialogHeader>
-						<AlertDialogTitle>Delete {title}?</AlertDialogTitle>
+						<AlertDialogTitle>Excluir {title}?</AlertDialogTitle>
 						<AlertDialogDescription>
-							This permanently deletes the chat, its messages, attachments, and
-							shared link. Any agent created from it stays available.
+							Exclui permanentemente a conversa, mensagens, anexos e link
+							compartilhado. Os agentes criados permanecem disponíveis.
 						</AlertDialogDescription>
 					</AlertDialogHeader>
 					<AlertDialogFooter>
 						<AlertDialogCancel disabled={removeAction.pending}>
-							Cancel
+							Cancelar
 						</AlertDialogCancel>
 						<Button
 							variant="destructive"
@@ -134,11 +134,11 @@ export function DeleteChatAction({
 						>
 							<AsyncButtonContent
 								status={removeAction.status}
-								pendingLabel="Deleting"
-								successLabel="Deleted"
-								errorLabel="Try again"
+								pendingLabel="Excluindo"
+								successLabel="Excluído"
+								errorLabel="Tentar novamente"
 							>
-								Delete chat
+								Excluir conversa
 							</AsyncButtonContent>
 						</Button>
 					</AlertDialogFooter>

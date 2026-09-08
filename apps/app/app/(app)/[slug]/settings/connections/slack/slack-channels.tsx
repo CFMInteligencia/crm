@@ -45,10 +45,10 @@ export function SlackChannels() {
 				setAsking(null);
 				toast.success(
 					result.alreadyJoined
-						? "Comp AI is already in there."
+						? "Comp AI já participa."
 						: result.queued
-							? "Comp AI is joining."
-							: "Ask someone inside to invite Comp AI.",
+							? "Comp AI está entrando."
+							: "Peça a um participante para convidar o Comp AI.",
 				);
 			},
 			onError: (error) => toast.error(error.message),
@@ -60,7 +60,7 @@ export function SlackChannels() {
 	const refresh = useMutation(
 		trpc.slack.refreshPeople.mutationOptions({
 			onSuccess: async () => {
-				toast.success("Reading the channel list from Slack.");
+				toast.success("Consultando canais do Slack.");
 				await channels.reload();
 			},
 			onError: (error) => toast.error(error.message),
@@ -75,9 +75,9 @@ export function SlackChannels() {
 		<section className="flex flex-col gap-3 px-(--spacing-block-inline)">
 			<div className="flex items-end justify-between gap-4">
 				<div>
-					<h2 className="font-medium text-sm">Channels Comp AI can reach</h2>
+					<h2 className="font-medium text-sm">Canais acessíveis ao Comp AI</h2>
 					<p className="text-muted-foreground text-xs">
-						Agents pick from this list.
+						Os agentes selecionam canais desta lista.
 					</p>
 				</div>
 				<Button
@@ -86,13 +86,13 @@ export function SlackChannels() {
 					size="sm"
 					variant="outline"
 				>
-					{refreshing ? "Refreshing…" : "Refresh"}
+					{refreshing ? "Refreshing…" : "Atualizar"}
 				</Button>
 			</div>
 
 			{channels.stalled ? (
 				<p className="text-warning text-xs">
-					Comp AI is not reading Slack right now. The list can be out of date.
+					O Slack não está sendo consultado. A lista pode estar desatualizada.
 				</p>
 			) : null}
 
@@ -103,7 +103,7 @@ export function SlackChannels() {
 					</InputGroupAddon>
 					<InputGroupInput
 						onChange={(event) => setQuery(event.target.value)}
-						placeholder="Search channels"
+						placeholder="Buscar canais"
 						value={query}
 					/>
 				</InputGroup>
@@ -115,10 +115,10 @@ export function SlackChannels() {
 				empty={
 					<p className="px-4 py-4 text-muted-foreground text-sm">
 						{channels.pending
-							? "Reading the channel list from Slack…"
+							? "Consultando canais do Slack…"
 							: query
-								? `No channel matches “${query}”.`
-								: "No channels yet. Comp AI reads the list from Slack after it connects."}
+								? `Nenhum canal corresponde a “${query}”.`
+								: "Nenhum canal disponível. Conecte o Slack para carregar a lista."}
 					</p>
 				}
 				onAdd={(channel) => void joinAction.run(channel.id)}
@@ -133,7 +133,7 @@ export function SlackChannels() {
 					size="sm"
 					variant="outline"
 				>
-					{channels.fetchingMore ? "Loading…" : "Load more"}
+					{channels.fetchingMore ? "Loading…" : "Carregar mais"}
 				</Button>
 			) : null}
 
@@ -167,11 +167,11 @@ function AskDialog({
 		try {
 			await navigator.clipboard.writeText(INVITE_COMMAND);
 		} catch {
-			toast.error("Copying failed. Copy the command above by hand.");
+			toast.error("Falha ao copiar. Copie o comando acima manualmente.");
 			return;
 		}
 
-		toast.success("Command copied.");
+		toast.success("Comando copiado.");
 		onConfirm();
 	}
 
@@ -181,13 +181,13 @@ function AskDialog({
 				<AlertDialogHeader>
 					<AlertDialogTitle>
 						{canInviteItself
-							? `Add Comp AI to #${channel.name}?`
-							: "Ask someone to add Comp AI"}
+							? `Adicionar Comp AI a #${channel.name}?`
+							: "Solicitar convite para Comp AI"}
 					</AlertDialogTitle>
 					<AlertDialogDescription>
 						{canInviteItself
-							? `It is a private channel, so Comp AI joins as you. Same as typing the invite yourself. Everyone in the channel sees it join. It reads nothing until you turn a permission on.`
-							: `We cannot add Comp AI to a private channel yet. Someone already in #${channel.name} has to run this.`}
+							? "O convite para este canal privado usa sua conta. Todos veem a entrada. A leitura depende das permissões ativadas."
+							: `Peça a um participante de #${channel.name} para executar este comando e convidar o Comp AI.`}
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 
@@ -199,14 +199,16 @@ function AskDialog({
 
 				<AlertDialogFooter>
 					<AlertDialogCancel disabled={status === "pending"}>
-						Cancel
+						Cancelar
 					</AlertDialogCancel>
 					<Button
 						disabled={status === "pending"}
 						onClick={canInviteItself ? onConfirm : () => void copyThenConfirm()}
 					>
 						<AsyncButtonContent pendingLabel="Adding…" status={status}>
-							{canInviteItself ? "Add Comp AI" : "Copy and mark as asked"}
+							{canInviteItself
+								? "Adicionar Comp AI"
+								: "Copiar e marcar como solicitado"}
 						</AsyncButtonContent>
 					</Button>
 				</AlertDialogFooter>

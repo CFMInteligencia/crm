@@ -120,8 +120,8 @@ export function AsyncButtonContent({
 	status,
 	children,
 	pendingLabel,
-	successLabel = "Done",
-	errorLabel = "Try again",
+	successLabel = "Concluído",
+	errorLabel = "Tentar novamente",
 }: AsyncButtonContentProps) {
 	const reduced = useReducedMotion() === true;
 	const states: Array<{ status: AsyncActionStatus; content: ReactNode }> = [

@@ -26,8 +26,8 @@ export function EnrichmentActions({
 				await cache.company(companyId);
 				toast.success(
 					result.queued
-						? "Looking it up — this page will update when it finishes."
-						: "Already running.",
+						? "Consultando dados. A página atualiza ao concluir."
+						: "Já está em execução.",
 				);
 			},
 			onError: (error) => toast.error(error.message),
@@ -40,8 +40,8 @@ export function EnrichmentActions({
 				await cache.activity();
 				toast.success(
 					result.queued
-						? "Researching — the brief lands on the timeline when it finishes."
-						: "Already researching.",
+						? "Pesquisando. O resumo aparece na linha do tempo ao concluir."
+						: "Pesquisa em andamento.",
 				);
 			},
 			onError: (error) => toast.error(error.message),
@@ -61,7 +61,7 @@ export function EnrichmentActions({
 				) : (
 					<Icon icon={Renew} data-icon="inline-start" />
 				)}
-				<span className="hidden sm:inline">Re-enrich</span>
+				<span className="hidden sm:inline">Atualizar dados</span>
 			</Button>
 
 			<Button
@@ -74,7 +74,7 @@ export function EnrichmentActions({
 				) : (
 					<Icon icon={MagicWand} data-icon="inline-start" />
 				)}
-				<span className="hidden sm:inline">Research</span>
+				<span className="hidden sm:inline">Pesquisar</span>
 			</Button>
 		</>
 	);
@@ -90,8 +90,8 @@ export function ContactEnrichmentAction({ contactId }: { contactId: string }) {
 				await cache.contact(contactId);
 				toast.success(
 					result.queued
-						? "Taking another look — this page will update when it finishes."
-						: "Already running.",
+						? "Atualizando pesquisa. A página atualiza ao concluir."
+						: "Já está em execução.",
 				);
 			},
 			onError: (error) => toast.error(error.message),
@@ -110,7 +110,7 @@ export function ContactEnrichmentAction({ contactId }: { contactId: string }) {
 			) : (
 				<Icon icon={Renew} data-icon="inline-start" />
 			)}
-			<span className="hidden sm:inline">Re-enrich</span>
+			<span className="hidden sm:inline">Atualizar dados</span>
 		</Button>
 	);
 }
